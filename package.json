@@ -16,7 +16,7 @@
     "@types/chai": "^4.2.14",
     "@types/mocha": "^8.0.3",
     "chai": "^4.2.0",
-    "mocha": "^8.2.0",
+    "mocha": "^8.2.1",
     "prettier": "^2.1.2",
     "rimraf": "^3.0.2",
     "service-worker-mock": "^2.0.3",
