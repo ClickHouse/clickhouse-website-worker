@@ -1,4 +1,4 @@
-import { changeUrl} from './util';
+import { changeUrl } from './util';
 
 export async function handleRepoRequest(request: Request) {
   let url = new URL(request.url);
