@@ -10,9 +10,10 @@ import { handlePresentationsRequest } from './presentations';
 import config from './config';
 
 const hostname_mapping = new Map([
+  ['play.clickhouse.com', handlePlaygroundRequest],
   ['play.clickhouse.tech', handlePlaygroundRequest],
-  ['repo.clickhouse.tech', handleRepoRequest],
-  ['birman111-test.clickhouse.tech', handlePlaygroundRequest],
+  ['repo.clickhouse.com', handleRepoRequest],
+  ['repo.clickhouse.tech', handleRepoRequest]
 ]);
 
 const pathname_mapping = new Map([
