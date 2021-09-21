@@ -8,9 +8,9 @@ export async function handlePlaygroundRequest(request: Request) {
     let version = version_match[1];
     url.pathname = url.pathname.replace(`/api/${version}/`, '/');
     version = version.replace('.', '-');
-    url.hostname = `play-api-${version}.clickhouse.tech`;
+    url.hostname = `play-api-${version}.clickhouse.com`;
   } else {
-    url.hostname = 'play-api.clickhouse.tech';
+    url.hostname = 'play-api.clickhouse.com';
     url.pathname = url.pathname.replace('/api/', '/');
   }
 
