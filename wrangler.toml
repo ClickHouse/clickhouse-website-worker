@@ -9,7 +9,7 @@ kv-namespaces = [
 ]
 
 [env.production]
-route = "clickhouse.tech/*"
+route = "clickhouse.com/*"
 zone_id = "4fc6fb1d46e87851605aa7fa69ca6fe0"
 kv-namespaces = [
     { binding = "RATING", id = "fab071214bbc4bc8bce73f8986701aec" },
