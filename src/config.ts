@@ -1,5 +1,5 @@
 export default {
-  domain: 'clickhouse.tech',
-  origin: 'content.clickhouse.tech',
+  domain: 'clickhouse.com',
+  origin: 'content.clickhouse.com',
   codebrowser: 'clickhouse-test-reports.s3.yandex.net',
 };
