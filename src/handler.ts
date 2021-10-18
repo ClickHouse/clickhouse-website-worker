@@ -29,6 +29,7 @@ const prefix_mapping = new Map([
   ['/favicon/', handleFaviconRequest],
   ['/presentations/', handlePresentationsRequest],
   ['/learn/', handleLearnRequest],
+  ['/learn', handleLearnRequest],
 ]);
 
 export async function handleRequest(request: Request): Promise<Response> {
