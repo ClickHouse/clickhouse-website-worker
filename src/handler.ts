@@ -7,6 +7,7 @@ import { handleMetrikaCounterRequest } from './metrika';
 import { handlePlaygroundRequest } from './playground';
 import { handleRepoRequest } from './repo';
 import { handlePresentationsRequest } from './presentations';
+import { handleLearnRequest } from './learn';
 import config from './config';
 
 const hostname_mapping = new Map([
@@ -27,6 +28,7 @@ const prefix_mapping = new Map([
   ['/codebrowser', handleCodebrowserRequest],
   ['/favicon/', handleFaviconRequest],
   ['/presentations/', handlePresentationsRequest],
+  ['/learn/', handleLearnRequest],
 ]);
 
 export async function handleRequest(request: Request): Promise<Response> {
