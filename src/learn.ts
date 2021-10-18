@@ -1,18 +1,10 @@
 import { changeUrl } from './util';
 
-/** Redirect from
+/** Proxy requests to
   * https://clickhouse.com/learn/*
-  * to
+  * from
   * https://clickhouselearn.github.io/home/*
   *
-  * Reference: https://developers.cloudflare.com/workers/examples/redirect
-  *
-  * Note: we are using redirects instead of proxying (fetch),
-  * because we don't want to keep multiple URLs for the same content.
-  *
-  * Note: we may use Cloudflare "Page Rules" for this purpose and it would be way more easy,
-  * but "Page Rules" cannot work if "Web Workers" are already used,
-  * so we have to extend the "Web Workers" code.
   */
 export async function handleLearnRequest(request: Request) {
 
