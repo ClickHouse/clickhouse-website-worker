@@ -15,12 +15,16 @@ import { changeUrl } from './util';
   * so we have to extend the "Web Workers" code.
   */
 export async function handleLearnRequest(request: Request) {
-  // Permanent redirect
-  const statusCode = 301;
 
-  let destinationURL = new URL(request.url);
-  destinationURL.hostname = 'clickhouselearn.github.io';
-  destinationURL.pathname = destinationURL.pathname.replace('home/', '');
+  let url = new URL(request.url);
+  url.hostname = 'clickhouselearn.github.io';
+  url.pathname = url.pathname.replace('learn/', 'home/');
 
-  return Response.redirect(destinationURL, statusCode)
+  const response = await fetch(url.toString());
+
+  return new Response(response.body, {
+    status: response.status,
+    statusText: response.statusText
+  });
+  
 }
