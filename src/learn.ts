@@ -16,7 +16,8 @@ export async function handleLearnRequest(request: Request) {
 
   let response =  new Response(proxy.body, {
     status: proxy.status,
-    statusText: proxy.statusText
+    statusText: proxy.statusText,
+    headers: proxy.headers
   });
 
   addDefaultHeaders(response);
