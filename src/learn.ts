@@ -10,7 +10,7 @@ export async function handleLearnRequest(request: Request) {
 
   let url = new URL(request.url);
   url.hostname = 'clickhouselearn.github.io';
-  url.pathname = url.pathname.replace('learn/', 'home/');
+  url.pathname = url.pathname.replace('learn', 'home');
 
   const response = await fetch(url.toString());
 
