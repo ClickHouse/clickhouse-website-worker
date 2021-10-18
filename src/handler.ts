@@ -28,7 +28,6 @@ const prefix_mapping = new Map([
   ['/codebrowser', handleCodebrowserRequest],
   ['/favicon/', handleFaviconRequest],
   ['/presentations/', handlePresentationsRequest],
-  ['/learn/', handleLearnRequest],
   ['/learn', handleLearnRequest],
 ]);
 
