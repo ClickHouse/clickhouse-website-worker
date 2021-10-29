@@ -9,8 +9,19 @@ import { addDefaultHeaders, changeUrl } from './util';
 export async function handleLearnRequest(request: Request) {
 
   let url = new URL(request.url);
-  url.hostname = 'clickhouselearn.github.io';
-  url.pathname = url.pathname.replace('learn','home');
+
+
+  if(request.url.includes("/data/xAPI")) {
+    //The request is for the Learning Record Store
+    //and looks like https://clickhouse.com/learn/data/xAPI
+    //and we want it to proxy to http://3.15.84.174/data/xAPI
+    url.hostname = '3.15.84.174';
+    url.protocol = 'http';
+    url.pathname = url.pathname.replace('/learn','');
+  } else {
+    url.hostname = 'clickhouselearn.github.io';
+    url.pathname = url.pathname.replace('learn','home');  
+  }
 
   const proxy = await fetch(url.toString());
 
