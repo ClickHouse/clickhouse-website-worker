@@ -15,7 +15,7 @@ export async function handleLearnRequest(request: Request) {
     //The request is for the Learning Record Store
     //and looks like https://clickhouse.com/learn/data/xAPI
     //and we want it to proxy to http://3.15.84.174/data/xAPI
-    url.hostname = '3.15.84.174';
+    url.hostname = 'ec2-18-222-223-240.us-east-2.compute.amazonaws.com';
     url.protocol = 'http';
     url.pathname = url.pathname.replace('/learn','');
   } else {
