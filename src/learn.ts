@@ -38,6 +38,9 @@ export async function handleLearnRequest(request: Request) {
 
   addDefaultHeaders(response);
 
+  //Need this for CORS
+  response.headers.set('Access-Control-Allow-Origin', '*');
+
   return response;
   
 }
