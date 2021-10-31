@@ -21,11 +21,6 @@ export async function handleLearnRequest(request: Request) {
     url.pathname.replace('/learn','');
 
     let xapiRequest = new Request(url.toString(), request);
-    xapiRequest.headers.append(
-      "authorization",
-      "Basic ZjU1NmU0NzY0ZmI4NTE4YTE1MTI0YWRjZWVhOTI2Mjk1YjM0OTU4Zjo2Y2Y1ZTZjZDFjMGZhMmEzNGMzM2QzNDU3YjVmODBkNzUzMjQ2MDdi"
-    );
-
     proxy = await fetch(xapiRequest);
 
   } else {
