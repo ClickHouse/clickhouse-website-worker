@@ -18,7 +18,7 @@ export async function handleLearnRequest(request: Request) {
     //and we want it to proxy to http://3.15.84.174/data/xAPI
     url.hostname = 'ec2-18-222-223-240.us-east-2.compute.amazonaws.com';
     url.protocol = 'http';
-    url.pathname.replace('/learn','');
+    url.pathname = url.pathname.replace('/learn','');
 
     let xapiRequest = new Request(url.toString(), request);
     proxy = await fetch(xapiRequest);
