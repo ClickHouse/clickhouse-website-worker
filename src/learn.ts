@@ -23,19 +23,6 @@ export async function handleLearnRequest(request: Request) {
     let xapiRequest = new Request(url.toString(), request);
     proxy = await fetch(xapiRequest);
 
-
-    //Need to set the headers for CORS
-    proxy.headers.set(
-      'content-security-policy',
-      `connect-src 'self' http://clickhouse.com;`
-    );
-    proxy.headers.set(
-      'Access-Control-Allow-Origin', 
-      '*'
-    );
-
-    return proxy;
-
   } else {
     url.hostname = 'clickhouselearn.github.io';
     url.pathname = url.pathname.replace('learn','home');  
@@ -49,7 +36,16 @@ export async function handleLearnRequest(request: Request) {
     headers: proxy.headers
   });
 
-  addDefaultHeaders(response);
+  //  addDefaultHeaders(response);
+  //Need to set the headers for CORS
+  response.headers.set(
+    'content-security-policy',
+    `connect-src 'self' http://clickhouse.com;`
+  );
+  response.headers.set(
+    'Access-Control-Allow-Origin', 
+    '*'
+  );
 
   return response;
   
