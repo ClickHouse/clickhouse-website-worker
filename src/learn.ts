@@ -35,7 +35,7 @@ export async function handleLearnRequest(request: Request) {
     headers: proxy.headers
   });
 
-  //  addDefaultHeaders(response);
+  addDefaultHeaders(response);
   //Need to set the headers for CORS
   response.headers.set(
     'content-security-policy',
