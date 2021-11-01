@@ -29,7 +29,6 @@ export async function handleLearnRequest(request: Request) {
     proxy = await fetch(url.toString());
   }
 
-
   let response =  new Response(proxy.body, {
     status: proxy.status,
     statusText: proxy.statusText,
@@ -46,7 +45,10 @@ export async function handleLearnRequest(request: Request) {
     'Access-Control-Allow-Origin', 
     '*'
   );
-
+  response.headers.set(
+    'Access-Control-Allow-Methods', 
+    'POST, PUT, GET, OPTIONS'
+  );
   return response;
   
 }
