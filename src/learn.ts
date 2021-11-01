@@ -35,12 +35,7 @@ export async function handleLearnRequest(request: Request) {
     headers: proxy.headers
   });
 
-  //  addDefaultHeaders(response);
-  //Need to set the headers for CORS
-  response.headers.set(
-    'content-security-policy',
-    `connect-src 'self' http://clickhouse.com;`
-  );
+  addDefaultHeaders(response);
   response.headers.set(
     'Access-Control-Allow-Origin', 
     '*'
