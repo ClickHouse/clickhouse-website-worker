@@ -18,7 +18,7 @@ export async function handleLearnRequest(request: Request) {
     //and we want it to proxy to http://3.15.84.174/data/xAPI
     url.hostname = 'ec2-18-222-223-240.us-east-2.compute.amazonaws.com';
     url.protocol = 'http';
-    url.pathname.replace('/learn','');
+    url.pathname = url.pathname.replace('/learn','');
 
     let xapiRequest = new Request(url.toString(), request);
     proxy = await fetch(xapiRequest);
@@ -28,7 +28,6 @@ export async function handleLearnRequest(request: Request) {
     url.pathname = url.pathname.replace('learn','home');  
     proxy = await fetch(url.toString());
   }
-
 
   let response =  new Response(proxy.body, {
     status: proxy.status,
@@ -46,7 +45,10 @@ export async function handleLearnRequest(request: Request) {
     'Access-Control-Allow-Origin', 
     '*'
   );
-
+  response.headers.set(
+    'Access-Control-Allow-Methods', 
+    'POST, PUT, GET, OPTIONS'
+  );
   return response;
   
 }
