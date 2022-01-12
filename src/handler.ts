@@ -1,20 +1,22 @@
 import { addDefaultHeaders, changeUrl } from './util';
+import { handleBuildsRequest } from './builds';
 import { handleCodebrowserRequest } from './codebrowser';
 import { handleDocsRequest } from './docs';
 import { handleFaviconRequest } from './favicon';
+import { handleLearnRequest } from './learn';
 import { handleMeetFormRequest } from './meet_form';
 import { handleMetrikaCounterRequest } from './metrika';
 import { handlePlaygroundRequest } from './playground';
-import { handleRepoRequest } from './repo';
 import { handlePresentationsRequest } from './presentations';
-import { handleLearnRequest } from './learn';
+import { handleRepoRequest } from './repo';
 import config from './config';
 
 const hostname_mapping = new Map([
+  ['builds.clickhouse.com', handleBuildsRequest],
   ['play.clickhouse.com', handlePlaygroundRequest],
   ['play.clickhouse.tech', handlePlaygroundRequest],
   ['repo.clickhouse.com', handleRepoRequest],
-  ['repo.clickhouse.tech', handleRepoRequest]
+  ['repo.clickhouse.tech', handleRepoRequest],
 ]);
 
 const pathname_mapping = new Map([
