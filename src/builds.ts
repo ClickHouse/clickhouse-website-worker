@@ -8,7 +8,7 @@ export async function handleBuildsRequest(request: Request) {
   const cf = {
     cf: {
       cacheEverything: true,
-      cacheTtl: 86400 * 3,
+      cacheTtl: 60 * 30, // a half hour
     },
   };
   let response = await fetch(changeUrl(request, url), cf);
