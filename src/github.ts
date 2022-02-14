@@ -4,7 +4,7 @@ import config from './config';
 export async function handleGitHubRequest(request: Request) {
   let url = new URL(request.url);
   const path = url.pathname;
-  url.hostname = config.origin
+  url.hostname = config.origins.github;
   const cf = {
     cf: {
       cacheEverything: true,

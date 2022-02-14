@@ -11,7 +11,7 @@ import { handlePlaygroundRequest } from './playground';
 import { handlePresentationsRequest } from './presentations';
 import { handleRepoRequest } from './repo';
 import { handlePantheonRequest } from './pantheon';
-import { handleGitHubRequest } from './github'
+import { handleGitHubRequest } from './github';
 import config from './config';
 
 const hostname_mapping = new Map([

@@ -4,10 +4,10 @@ import config from './config';
 export async function handlePantheonRequest(request: Request, production: boolean = false) {
   let url = new URL(request.url);
   const path = url.pathname;
-  url.hostname = config.origin_pantheon
+  url.hostname = config.origins.pantheon
 
   if (!production) {
-    url.hostname = 'staging-clickhouse.pantheonsite.io';
+    url.hostname = config.origins.pantheon_staging;
   }
 
   const cf = {
