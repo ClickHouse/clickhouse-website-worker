@@ -10,6 +10,8 @@ import { handlePackagesRequest } from './packages';
 import { handlePlaygroundRequest } from './playground';
 import { handlePresentationsRequest } from './presentations';
 import { handleRepoRequest } from './repo';
+import { handlePantheonRequest } from './pantheon';
+import { handleGitHubRequest } from './github';
 import config from './config';
 
 const hostname_mapping = new Map([
@@ -19,6 +21,7 @@ const hostname_mapping = new Map([
   ['repo.clickhouse.com', handleRepoRequest],
   ['repo.clickhouse.tech', handleRepoRequest],
   ['packages.clickhouse.com', handlePackagesRequest],
+  ['staging.clickhouse.com', handlePantheonRequest],
 ]);
 
 const pathname_mapping = new Map([
@@ -33,6 +36,7 @@ const prefix_mapping = new Map([
   ['/favicon/', handleFaviconRequest],
   ['/presentations/', handlePresentationsRequest],
   ['/learn', handleLearnRequest],
+  ['/benchmark', handleGitHubRequest],
 ]);
 
 export async function handleRequest(request: Request): Promise<Response> {
@@ -50,9 +54,6 @@ export async function handleRequest(request: Request): Promise<Response> {
       return prefix_handler(request);
     }
   }
-  url.hostname = config.origin;
-  let response = await fetch(changeUrl(request, url));
-  response = new Response(response.body, response);
-  addDefaultHeaders(response);
-  return response;
+
+  return handlePantheonRequest(request, config.production)
 }

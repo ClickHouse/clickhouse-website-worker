@@ -19,16 +19,22 @@ export function addDefaultHeaders(response: Response) {
   response.headers.set('x-content-type-options', 'nosniff');
   response.headers.set('x-frame-options', 'DENY');
   response.headers.set('x-xss-protection', '1; mode=block');
+  response.headers.set('referrer-policy', 'no-referrer-when-downgrade');
   response.headers.set(
     'content-security-policy',
-    `default-src 'none'; script-src 'self' 'unsafe-eval' cdn.ampproject.org ajax.cloudflare.com static.cloudflareinsights.com boards.greenhouse.io *.algolia.net *.algolianet.com buttons.github.io mc.yandex.ru mc.yandex.com yastatic.net www.googletagmanager.com 'sha256-Iq4L1sSeHXuAPP2voTJueoZ6m/sIwJTiyN3yOq9j8A8=' 'sha256-6wRdeNJzEHNIsDAMAdKbdVLWIqu8b6+Bs+xVNZqplQw='; style-src 'self' 'unsafe-inline' fonts.googleapis.com; img-src 'self' www.googletagmanager.com blog-images.clickhouse.com data: mc.yandex.ru mc.yandex.com; object-src 'self' blog-images.clickhouse.com; connect-src 'self' http://clickhouse.com www.google-analytics.com mc.yandex.ru mc.yandex.com api.github.com cdn.ampproject.org *.algolia.net *.algolianet.com *.ingest.sentry.io hn.algolia.com www.reddit.com; child-src blob: mc.yandex.ru mc.yandex.com; frame-src blob: mc.yandex.ru mc.yandex.com www.youtube.com datalens.yandex blog-images.clickhouse.com boards.greenhouse.io; font-src 'self' fonts.gstatic.com data:; base-uri 'none'; form-action 'self' webto.salesforce.com; frame-ancestors webvisor.com metrika.yandex.ru metrica.yandex.com; prefetch-src 'self'`,
+    `default-src 'none'; script-src 'self' 'unsafe-eval' cdn.ampproject.org ajax.cloudflare.com static.cloudflareinsights.com boards.greenhouse.io *.algolia.net *.algolianet.com buttons.github.io mc.yandex.ru mc.yandex.com yastatic.net www.googletagmanager.com 'sha256-Iq4L1sSeHXuAPP2voTJueoZ6m/sIwJTiyN3yOq9j8A8=' 'sha256-6wRdeNJzEHNIsDAMAdKbdVLWIqu8b6+Bs+xVNZqplQw=' bam.nr-data.net js-agent.newrelic.com discover.clickhouse.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com discover.clickhouse.com; img-src 'self' www.googletagmanager.com blog-images.clickhouse.com data: mc.yandex.ru mc.yandex.com; object-src 'self' blog-images.clickhouse.com; connect-src 'self' http://clickhouse.com www.google-analytics.com mc.yandex.ru mc.yandex.com api.github.com cdn.ampproject.org *.algolia.net *.algolianet.com *.ingest.sentry.io hn.algolia.com www.reddit.com bam.nr-data.net; child-src blob: mc.yandex.ru mc.yandex.com; frame-src blob: mc.yandex.ru mc.yandex.com www.youtube.com datalens.yandex blog-images.clickhouse.com boards.greenhouse.io discover.clickhouse.com; font-src 'self' fonts.gstatic.com data:; base-uri 'none'; form-action 'self' webto.salesforce.com; frame-ancestors webvisor.com metrika.yandex.ru metrica.yandex.com; prefetch-src 'self'`,
   );
   const location = response.headers.get('location');
-  if (location && location.indexOf(config.origin) >= 0) {
-    response.headers.set(
-      'location',
-      location.replace(config.origin, config.domain),
-    );
+  for (let key of Object.keys(config.redirects)) {
+    let origin = config.origins[key as keyof typeof config.origins];
+    let destination = config.redirects[key as keyof typeof config.redirects];
+
+    if (location && location.indexOf(origin) >= 0) {
+      response.headers.set(
+          'location',
+          location.replace(origin, destination),
+      );
+    }
   }
 }
 
