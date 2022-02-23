@@ -7,7 +7,7 @@ export default {
    */
   origins: {
     github: 'content.clickhouse.com',
-    pantheon: 'content.clickhouse.com',
+    pantheon: 'live-clickhouse.pantheonsite.io',
     pantheon_staging: 'staging-clickhouse.pantheonsite.io',
   },
   redirects: {

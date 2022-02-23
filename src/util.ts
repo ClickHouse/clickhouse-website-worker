@@ -1,7 +1,7 @@
 import config from './config';
 
-export function addDefaultHeaders(response: Response) {
-  const to_delete = [
+export function addDefaultHeaders(response: Response, delete_headers: string[] = []) {
+  let to_delete = [
     'x-served-by',
     'x-cache',
     'x-cache-hits',
@@ -13,6 +13,11 @@ export function addDefaultHeaders(response: Response) {
     'x-pages-group',
     'x-proxy-cache',
   ];
+
+  if (delete_headers.length) {
+    to_delete.push(...delete_headers);
+  }
+
   for (let idx in to_delete) {
     response.headers.delete(to_delete[idx]);
   }
