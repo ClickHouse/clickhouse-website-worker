@@ -31,7 +31,6 @@ const pathname_mapping = new Map([
 
 const prefix_mapping = new Map([
   ['/docs', handleDocsRequest],
-  ['/blog', handleDocsRequest],  // TODO maybe split up to separate handler
   ['/codebrowser', handleCodebrowserRequest],
   ['/favicon/', handleFaviconRequest],
   ['/presentations/', handlePresentationsRequest],
