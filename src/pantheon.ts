@@ -4,7 +4,7 @@ import config from './config';
 export async function handlePantheonRequest(request: Request, production: boolean = false) {
   let url = new URL(request.url);
   let delete_headers = [
-      'x-robots-tag'
+    'x-robots-tag'
   ];
   const path = url.pathname;
   url.hostname = config.origins.pantheon
@@ -12,6 +12,8 @@ export async function handlePantheonRequest(request: Request, production: boolea
   if (!production) {
     delete_headers = [];
     url.hostname = config.origins.pantheon_staging;
+  } else if (path === '/robots.txt') {
+    url.pathname = '/robots-live.txt';
   }
 
   const cf = {
