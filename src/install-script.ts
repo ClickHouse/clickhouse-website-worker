@@ -1,5 +1,4 @@
 import { changeUrl } from './util';
-import config from './config';
 
 export async function handleInstallScriptRequest(
   request: Request,
