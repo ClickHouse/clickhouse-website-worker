@@ -4,7 +4,6 @@ import { handleCodebrowserRequest } from './codebrowser';
 import { handleDocsRequest } from './docs';
 import { handleFaviconRequest } from './favicon';
 import { handleLearnRequest } from './learn';
-import { handleMeetFormRequest } from './meet_form';
 import { handleMetrikaCounterRequest } from './metrika';
 import { handlePackagesRequest } from './packages';
 import { handlePlaygroundRequest } from './playground';
@@ -25,7 +24,6 @@ const hostname_mapping = new Map([
 ]);
 
 const pathname_mapping = new Map([
-  ['/meet-form/', handleMeetFormRequest],
   ['/js/metrika.js', handleMetrikaCounterRequest],
 ]);
 
