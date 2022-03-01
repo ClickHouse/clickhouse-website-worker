@@ -17,7 +17,7 @@ export async function handleCodebrowserRequest(
   if (response.headers.get('content-type') === 'text/html; charset=utf-8') {
     let text = await response.text();
     text = text
-      .split('https://clickhouse-test-reports.s3.yandex.net/')
+      .split('https://clickhouse-test-reports.s3.amazonaws.com/')
       .join('/');
     text = text
       .split("a href='http")
