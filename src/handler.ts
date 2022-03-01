@@ -9,6 +9,7 @@ import { handlePackagesRequest } from './packages';
 import { handlePlaygroundRequest } from './playground';
 import { handlePresentationsRequest } from './presentations';
 import { handleRepoRequest } from './repo';
+import { handleInstallScriptRequest } from './install-script';
 import { handlePantheonRequest } from './pantheon';
 import { handleGitHubRequest } from './github';
 import config from './config';
@@ -53,6 +54,12 @@ export async function handleRequest(request: Request): Promise<Response> {
     if (url.pathname.startsWith(prefix)) {
       return prefix_handler(request);
     }
+  }
+
+  // curl https://clickhouse.com/ will output an install script
+  const user_agent = request.headers.get('User-Agent');
+  if (user_agent && url.pathname === '/' && user_agent.startsWith('curl/')) {
+    return handleInstallScriptRequest(request);
   }
 
   return handlePantheonRequest(request, config.production)
