@@ -1,5 +1,4 @@
 import { addDefaultHeaders, changeUrl } from './util';
-import { recordDownload } from './repo';
 
 const domain = 'clickhousedb.jfrog.io';
 const pathPrefix = '/artifactory';

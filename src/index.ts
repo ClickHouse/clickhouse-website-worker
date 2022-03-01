@@ -2,11 +2,9 @@ import { handleRequest } from './handler';
 import config from './config';
 import { changeUrl } from './util';
 import { sendExceptionToSentry } from './sentry';
-import { recordDownload } from './repo'
 
 addEventListener('fetch', (event) => {
   event.respondWith(handleEvent(event));
-  event.waitUntil(recordDownload(event.request));
 });
 
 async function handleEvent(event: FetchEvent) {
