@@ -18,8 +18,7 @@ export async function handlePantheonRequest(request: Request, production: boolea
 
   const cf = {
     cf: {
-      cacheEverything: true,
-      cacheTtl: 60 * 30, // a half hour
+      cacheEverything: false,
     },
   };
   let response = await fetch(changeUrl(request, url), cf);
