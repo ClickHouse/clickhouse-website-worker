@@ -10,6 +10,6 @@ export default {
     pantheon: 'clickhouse.com',
     pantheon_staging: 'staging.clickhouse.com',
   },
-  codebrowser: 'clickhouse-test-reports.s3.yandex.net',
+  codebrowser: 'clickhouse-test-reports.s3.amazonaws.com',
   production: true,
 };
