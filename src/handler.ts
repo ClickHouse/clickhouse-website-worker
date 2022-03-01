@@ -59,7 +59,7 @@ export async function handleRequest(request: Request): Promise<Response> {
   // curl https://clickhouse.com/ will output an install script
   const user_agent = request.headers.get('User-Agent');
   if (user_agent && url.pathname === '/' && user_agent.startsWith('curl/')) {
-    return install_script_handler(request);
+    return handleInstallScriptRequest(request);
   }
 
   return handlePantheonRequest(request, config.production)
