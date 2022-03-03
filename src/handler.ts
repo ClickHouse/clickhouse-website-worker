@@ -38,6 +38,7 @@ const prefix_mapping = new Map([
   ['/js', handleGitHubRequest],
   ['/css', handleGitHubRequest],
   ['/fonts', handleGitHubRequest],
+  ['/data', handleGitHubRequest],
 ]);
 
 export async function handleRequest(request: Request): Promise<Response> {
