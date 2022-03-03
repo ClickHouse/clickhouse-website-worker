@@ -56,9 +56,10 @@ export async function handleRequest(request: Request): Promise<Response> {
     }
   }
 
-  // curl https://clickhouse.com/ will output an install script
-  const user_agent = request.headers.get('User-Agent');
-  if (user_agent && url.pathname === '/' && user_agent.startsWith('curl/')) {
+  // curl https://clickhouse.com/ will output an install script. Note: HTTP2 has headers in lowercase.
+  const user_agent = request.headers.get('User-Agent') || request.headers.get('user-agent') || '';
+
+  if (url.pathname === '/' && user_agent.startsWith('curl/')) {
     return handleInstallScriptRequest(request);
   }
 
