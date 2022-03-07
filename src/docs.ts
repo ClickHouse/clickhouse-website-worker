@@ -81,9 +81,17 @@ export async function handleDocsRequest(request: Request): Promise<Response> {
     let redirect_prefix = '<!--[if IE 6]> Redirect: ';
     if (text.startsWith(redirect_prefix)) {
       let target = new URL(request.url);
-      target.pathname = text
-        .substring(redirect_prefix.length)
-        .split(' <![endif]-->', 1)[0];
+      let path = text
+          .substring(redirect_prefix.length)
+          .split(' <![endif]-->', 1)[0];
+      let absolute_prefix = `https://${config.domain}`;
+
+      if (path.startsWith(absolute_prefix)) {
+        path = path.substring(absolute_prefix.length, path.length)
+      }
+
+      target.pathname = path;
+
       return Response.redirect(target.toString(), 301);
     } else {
       let rating_count = 1;
