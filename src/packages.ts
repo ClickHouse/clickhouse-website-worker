@@ -21,7 +21,10 @@ export async function handlePackagesRequest(request: Request) {
     const cf = {
       cf: {
         cacheEverything: true,
-        cacheTtl: 7 * 86400,
+        cacheTtlByStatus: {
+          "200-299": 7 * 86400,
+          "300-599": 5,
+        },
       },
     };
     return fetch(changeUrl(request, url), cf);
