@@ -36,7 +36,6 @@ async function getRedirectedPackage(request: Request, url: URL, redirects: numbe
   let maxRedirects = 5;
   const cf = {
     cf: {
-      cacheEverything: true,
       cacheTtlByStatus: {
         // Return files with 7d TTL
         "200-299": 7 * 86400,
