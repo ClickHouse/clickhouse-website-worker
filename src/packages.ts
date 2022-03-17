@@ -20,7 +20,17 @@ export async function handlePackagesRequest(request: Request) {
   }
 
   // For redirects we rewrite location to a proper domain
-  let response = await fetch(changeUrl(request, url));
+  const cf = {
+    cf: {
+      cacheTtlByStatus: {
+        // Return files with 7d TTL
+        "200-299": 120,
+        "301-302": 20,
+        "400-599": 10,
+      },
+    }
+  }
+  let response = await fetch(changeUrl(request, url), cf);
   response = new Response(response.body, response);
   const location = response.headers.get('location');
   const toReplace = domain + pathPrefix;
@@ -40,7 +50,7 @@ async function getRedirectedPackage(request: Request, url: URL, redirects: numbe
         // Return files with 7d TTL
         "200-299": 7 * 86400,
         "300-399": 5,
-        "400-599": 0,
+        "400-599": 10,
       },
     },
   };
