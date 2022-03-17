@@ -40,7 +40,8 @@ async function getRedirectedPackage(request: Request, url: URL, redirects: numbe
       cacheTtlByStatus: {
         // Return files with 7d TTL
         "200-299": 7 * 86400,
-        "300-599": 5,
+        "300-399": 5,
+        "400-599": 0,
       },
     },
   };
