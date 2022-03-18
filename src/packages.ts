@@ -16,7 +16,7 @@ export async function handlePackagesRequest(request: Request) {
   url.hostname = domain;
   url.pathname = pathPrefix + path;
   if (path.endsWith('.deb') || path.endsWith('.rpm') || path.endsWith('.tgz')) {
-    return getRedirectedPackage(request, url, 0);
+    return getRedirectedPackage(request, url, `https://${origin}/${url.pathname}`, 0);
   }
 
   // For redirects we rewrite location to a proper domain
@@ -40,7 +40,7 @@ export async function handlePackagesRequest(request: Request) {
   return response;
 }
 
-async function getRedirectedPackage(request: Request, url: URL, redirects: number):Promise<Response> {
+async function getRedirectedPackage(request: Request, url: URL, cacheKey: string, redirects: number):Promise<Response> {
   // Jfrog put big files to S3 and redirects original requests there
   // The 5 redirects is the maximum depth
   let maxRedirects = 5;
@@ -49,15 +49,17 @@ async function getRedirectedPackage(request: Request, url: URL, redirects: numbe
       cacheTtlByStatus: {
         // Return files with 7d TTL
         "200-299": 7 * 86400,
-        "300-399": 5,
+        "301-302": 0,
         "400-599": 10,
       },
+      cacheKey: cacheKey,
+      cacheEverything: true,
     },
   };
   let response = await fetch(changeUrl(request, url), cf);
   const location = response.headers.get('location');
   if (location && redirects < maxRedirects) {
-    return getRedirectedPackage(request, new URL(location), redirects+1);
+    return getRedirectedPackage(request, new URL(location), cacheKey, redirects+1);
   }
   return response;
 }
