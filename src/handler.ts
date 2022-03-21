@@ -6,7 +6,6 @@ import { handleFaviconRequest } from './favicon';
 import { handleLearnRequest } from './learn';
 import { handleMetrikaCounterRequest } from './metrika';
 import { handlePackagesRequest } from './packages';
-import { handlePlaygroundRequest } from './playground';
 import { handlePresentationsRequest } from './presentations';
 import { handleRepoRequest } from './repo';
 import { handleInstallScriptRequest } from './install-script';
@@ -16,8 +15,6 @@ import config from './config';
 
 const hostname_mapping = new Map([
   ['builds.clickhouse.com', handleBuildsRequest],
-  ['play.clickhouse.com', handlePlaygroundRequest],
-  ['play.clickhouse.tech', handlePlaygroundRequest],
   ['repo.clickhouse.com', handleRepoRequest],
   ['repo.clickhouse.tech', handleRepoRequest],
   ['packages.clickhouse.com', handlePackagesRequest],
