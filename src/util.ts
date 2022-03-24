@@ -28,9 +28,9 @@ export function addDefaultHeaders(response: Response, delete_headers: string[] =
   response.headers.set(
     'content-security-policy',
     "default-src 'none';" +
-    "script-src 'self' 'unsafe-eval' 'unsafe-inline' cdn.segment.com cdn.ampproject.org ajax.cloudflare.com static.cloudflareinsights.com boards.greenhouse.io *.algolia.net *.algolianet.com buttons.github.io mc.yandex.ru mc.yandex.com yastatic.net www.googletagmanager.com www.googleadservices.com bam.nr-data.net js-agent.newrelic.com discover.clickhouse.com munchkin.marketo.net;" +
+    "script-src 'self' 'unsafe-eval' 'unsafe-inline' cdn.segment.com cdn.ampproject.org ajax.cloudflare.com static.cloudflareinsights.com boards.greenhouse.io *.algolia.net *.algolianet.com buttons.github.io mc.yandex.ru mc.yandex.com yastatic.net www.googletagmanager.com www.googleadservices.com googleads.g.doubleclick.net bam.nr-data.net js-agent.newrelic.com discover.clickhouse.com munchkin.marketo.net;" +
     "style-src 'self' 'unsafe-inline' fonts.googleapis.com discover.clickhouse.com;" +
-    "img-src 'self' www.googletagmanager.com blog-images.clickhouse.com data: mc.yandex.ru mc.yandex.com secure.gravatar.com s.w.org;" +
+    "img-src 'self' www.googletagmanager.com googleads.g.doubleclick.net blog-images.clickhouse.com data: mc.yandex.ru mc.yandex.com secure.gravatar.com s.w.org;" +
     "object-src 'self' blog-images.clickhouse.com;" +
     "connect-src 'self' https://api.segment.io/v1/ https://api.segment.io/ https://cdn.segment.com/v1/projects/dZuEnmCPmWqDuSEzCvLUSBBRt8Xrh2el/settings https://cdn.segment.com/v1/projects/pYKX60InlEzX6aI1NeyVhSF3pAIRj4Xo/settings https://cdn.segment.com/analytics-next/bundles/* https://cdn.segment.com/next-integrations/integrations/* http://clickhouse.com www.google-analytics.com mc.yandex.ru mc.yandex.com api.github.com cdn.ampproject.org *.algolia.net *.algolianet.com *.ingest.sentry.io hn.algolia.com www.reddit.com bam.nr-data.net *.mktoresp.com yoast.com;" +
     "child-src blob: mc.yandex.ru mc.yandex.com;" +
