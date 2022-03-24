@@ -39,7 +39,7 @@ export function addDefaultHeaders(response: Response, delete_headers: string[] =
     "base-uri 'none';" +
     "form-action 'self' webto.salesforce.com;" +
     "frame-ancestors webvisor.com metrika.yandex.ru metrica.yandex.com;" +
-    "prefetch-src 'self'',"
+    "prefetch-src 'self'"
   );
   const location = response.headers.get('location');
   for (let key of Object.keys(config.redirects)) {
