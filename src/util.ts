@@ -33,7 +33,7 @@ export function addDefaultHeaders(response: Response, delete_headers: string[] =
     "img-src * 'self' data: https:;" +
     "object-src 'self' blog-images.clickhouse.com;" +
     "connect-src 'self' https://api.segment.io/v1/ https://api.segment.io/ https://cdn.segment.com/v1/projects/dZuEnmCPmWqDuSEzCvLUSBBRt8Xrh2el/settings https://cdn.segment.com/v1/projects/pYKX60InlEzX6aI1NeyVhSF3pAIRj4Xo/settings https://cdn.segment.com/analytics-next/bundles/* https://cdn.segment.com/next-integrations/integrations/* http://clickhouse.com www.google-analytics.com api.github.com cdn.ampproject.org *.algolia.net *.algolianet.com *.ingest.sentry.io hn.algolia.com www.reddit.com bam.nr-data.net *.mktoresp.com yoast.com;" +
-    "frame-src blob: www.youtube.com blog-images.clickhouse.com boards.greenhouse.io discover.clickhouse.com;" +
+    "frame-src blob: www.youtube.com player.vimeo.com blog-images.clickhouse.com boards.greenhouse.io discover.clickhouse.com;" +
     "font-src 'self' fonts.gstatic.com data:;" +
     "base-uri 'none';" +
     "form-action 'self' webto.salesforce.com;" +
