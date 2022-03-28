@@ -37,7 +37,7 @@ export function addDefaultHeaders(response: Response, delete_headers: string[] =
     "font-src 'self' fonts.gstatic.com data:;" +
     "base-uri 'none';" +
     "form-action 'self' webto.salesforce.com;" +
-    "frame-ancestors webvisor.com;" +
+    "frame-ancestors 'none';" +
     "prefetch-src 'self'"
   );
   const location = response.headers.get('location');
