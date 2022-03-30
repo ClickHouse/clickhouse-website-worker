@@ -2,9 +2,26 @@ import { addDefaultHeaders, changeUrl } from './util';
 
 const domain = 'clickhousedb.jfrog.io';
 const pathPrefix = '/artifactory';
+const slash = `<!DOCTYPE html>
+<html>
+<head><title>Index of /</title></head>
+<body>
+<h1>Index of /</h1>
+<pre><a href="deb/">deb/</a>
+<a href="rpm/">rpm/</a>
+<a href="tgz/">tgz/</a></pre>
+</body></html>`
 
 export async function handlePackagesRequest(request: Request) {
   let url = new URL(request.url);
+  if (url.pathname === '/') {
+    const init = {
+      headers: {
+        'content-type': 'text/html;charset=UTF-8',
+      },
+    };
+    return new Response(slash, init);
+  }
   const origin = url.hostname;
   // Add auth header and prevent redirecting to UI interface
   request = new Request(url.toString(), request);
