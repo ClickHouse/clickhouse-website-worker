@@ -30,7 +30,6 @@ const prefix_mapping = new Map([
   ['/docs/ru', handleGitHubRequest],
   ['/docs/zh', handleGitHubRequest],
   ['/docs/ja', handleGitHubRequest],
-  ['/docs', handleDocsRequest],
   ['/codebrowser', handleCodebrowserRequest],
   ['/favicon/', handleFaviconRequest],
   ['/presentations/', handlePresentationsRequest],
@@ -56,6 +55,11 @@ export async function handleRequest(request: Request): Promise<Response> {
     if (url.pathname.startsWith(prefix)) {
       return prefix_handler(request);
     }
+  }
+  
+  /// The new docs have lowest priority, because they should not shadow the old assets on the website.
+  if (url.pathname.startsWith('/docs')) {
+    return handleDocsRequest(request);
   }
 
   // curl https://clickhouse.com/ will output an install script. Note: HTTP2 has headers in lowercase.
