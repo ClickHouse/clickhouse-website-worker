@@ -26,6 +26,7 @@ const pathname_mapping = new Map([
 ]);
 
 const prefix_mapping = new Map([
+  ['/docs/css', handleGitHubRequest],
   ['/docs', handleDocsRequest],
   ['/codebrowser', handleCodebrowserRequest],
   ['/favicon/', handleFaviconRequest],
