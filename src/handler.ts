@@ -4,7 +4,6 @@ import { handleCodebrowserRequest } from './codebrowser';
 import { handleDocsRequest } from './docs';
 import { handleFaviconRequest } from './favicon';
 import { handleLearnRequest } from './learn';
-import { handleMetrikaCounterRequest } from './metrika';
 import { handlePackagesRequest } from './packages';
 import { handlePresentationsRequest } from './presentations';
 import { handleRepoRequest } from './repo';
@@ -19,10 +18,6 @@ const hostname_mapping = new Map([
   ['repo.clickhouse.tech', handleRepoRequest],
   ['packages.clickhouse.com', handlePackagesRequest],
   ['staging.clickhouse.com', handlePantheonRequest],
-]);
-
-const pathname_mapping = new Map([
-  ['/js/metrika.js', handleMetrikaCounterRequest],
 ]);
 
 /// Map data type in TypeScript is unordered, so please note that "for" loops will be not in this order.
@@ -51,10 +46,6 @@ export async function handleRequest(request: Request): Promise<Response> {
   const hostname_handler = hostname_mapping.get(url.hostname);
   if (hostname_handler) {
     return hostname_handler(request);
-  }
-  const pathname_handler = pathname_mapping.get(url.pathname);
-  if (pathname_handler) {
-    return pathname_handler(request);
   }
   for (const [prefix, prefix_handler] of prefix_mapping.entries()) {
     if (url.pathname.startsWith(prefix)) {
