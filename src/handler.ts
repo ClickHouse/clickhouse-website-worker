@@ -25,11 +25,16 @@ const pathname_mapping = new Map([
   ['/js/metrika.js', handleMetrikaCounterRequest],
 ]);
 
+/// Map data type in TypeScript is unordered, so please note that "for" loops will be not in this order.
 const prefix_mapping = new Map([
   ['/docs/css', handleGitHubRequest],
+  ['/docs/js', handleGitHubRequest],
+  ['/docs/images', handleGitHubRequest],
+  
   ['/docs/ru', handleGitHubRequest],
   ['/docs/zh', handleGitHubRequest],
   ['/docs/ja', handleGitHubRequest],
+  
   ['/codebrowser', handleCodebrowserRequest],
   ['/favicon/', handleFaviconRequest],
   ['/presentations/', handlePresentationsRequest],
