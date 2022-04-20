@@ -18,11 +18,7 @@ export async function handleDocsRequest(request: Request): Promise<Response> {
 
   let response = await fetch(changeUrl(request, url));
 
-  if (
-    response.status === 200 &&
-    response.headers.get('content-type') === 'text/html; charset=utf-8' &&
-    url.pathname.indexOf('/single/') === -1
-  ) {
+  if (response.status === 200) {
 
     /// The docs have a quite strange mechanics of redirects.
     /// It generates a static file with JS redirect.
