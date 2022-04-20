@@ -51,6 +51,8 @@ export async function handleDocsRequest(request: Request): Promise<Response> {
     }
   }
 
+  /// Let Docusaurus handle all the remaining cases of redirects or 404 pages.
+
   response = new Response(response.body, response);
   addDefaultHeaders(response);
   return response;
