@@ -50,14 +50,7 @@ export async function handleDocsRequest(request: Request): Promise<Response> {
       return response;
     }
   }
-  if (response.status === 404) {
-    let version_match = url.pathname.match(/^\/docs\/(v[0-9]+\.[0-9]+)\//);
-    if (version_match && version_match.length > 1) {
-      let target = new URL(request.url);
-      target.pathname = url.pathname.replace(version_match[1] + '/', '');
-      return Response.redirect(target.toString(), 301);
-    }
-  }
+
   response = new Response(response.body, response);
   addDefaultHeaders(response);
   return response;
