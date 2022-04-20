@@ -4,6 +4,7 @@ export default {
     github: 'content.clickhouse.com',
     pantheon: 'live-clickhouse.pantheonsite.io',
     pantheon_staging: 'staging-clickhouse.pantheonsite.io',
+    docs_url: 'docs-content.clickhouse.tech',
   },
   redirects: {
     github: 'clickhouse.com',

@@ -70,7 +70,7 @@ export async function handleDocsRequest(request: Request): Promise<Response> {
   if (request.method == 'POST' && url.pathname.endsWith('/rate/')) {
     return handleArticleRating(request);
   }
-  url.hostname = config.origins.github;
+  url.hostname = config.origins.docs_url;
   let response = await fetch(changeUrl(request, url));
   if (
     response.status === 200 &&
