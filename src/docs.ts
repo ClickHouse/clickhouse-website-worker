@@ -46,7 +46,9 @@ export async function handleDocsRequest(request: Request): Promise<Response> {
   /// If Docusaurus produced a redirect, let's replace the domain back to clickhouse.com.
 
   if (response.status === 301) {
-    return Response.redirect(response.headers.location.replace(config.origins.github_docs_content, config.origins.domain), 301);
+    let target = new URL(response.headers.get("location"));
+    target.hostname = config.domain;
+    return Response.redirect(target.toString(), 301);
   }
 
   /// Let Docusaurus handle all the remaining cases of 404 pages.
