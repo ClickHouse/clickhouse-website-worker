@@ -27,7 +27,7 @@ export function addDefaultHeaders(response: Response, delete_headers: string[] =
   response.headers.set('referrer-policy', 'no-referrer-when-downgrade');
   response.headers.set(
     'content-security-policy',
-    "default-src 'none';" +
+    "default-src 'self';" +
     "script-src 'self' 'unsafe-eval' 'unsafe-inline' cdn.segment.com cdn.ampproject.org ajax.cloudflare.com static.cloudflareinsights.com boards.greenhouse.io *.algolia.net *.algolianet.com buttons.github.io yastatic.net www.googletagmanager.com www.googleadservices.com googleads.g.doubleclick.net bam.nr-data.net js-agent.newrelic.com discover.clickhouse.com munchkin.marketo.net player.vimeo.com;" +
     "style-src 'self' 'unsafe-inline' fonts.googleapis.com discover.clickhouse.com;" +
     "img-src * 'self' data: https:;" +
