@@ -33,8 +33,6 @@ const prefix_mapping = [
   /// This is being used by the new Docs on Docusaurus, see the preview at https://docs-content.clickhouse.tech/
   /// We proxy it on https://clickhouse.com/docs/ for convenience.
   ['/docs', handleDocsRequest],
-  ['/assets/', handleDocsRequest],
-  ['/img/', handleDocsRequest],
 
   ['/codebrowser', handleCodebrowserRequest],
   ['/favicon/', handleFaviconRequest],

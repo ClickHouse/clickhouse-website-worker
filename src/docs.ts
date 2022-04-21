@@ -5,16 +5,8 @@ export async function handleDocsRequest(request: Request): Promise<Response> {
   let url = new URL(request.url);
 
   /// The URLs like https://clickhouse.com/docs/xyz
-  /// are mapped to https://docs-content.clickhouse.tech/xyz
-  /// (note the removal of the docs/ component from the path)
-
-  /// But the URLs like https://clickhouse.com/xyz
-  /// are mapped to https://clickhouse.com/xyz
-
-  /// This is needed to support absolute URLs to /assets/{js,css} from the /docs/
-
+  /// are mapped to https://docs-content.clickhouse.tech/docs/xyz
   url.hostname = config.origins.github_docs_content;
-  url.path = url.path.replace("/docs", "");
 
   let response = await fetch(changeUrl(request, url));
 
@@ -51,7 +43,13 @@ export async function handleDocsRequest(request: Request): Promise<Response> {
     }
   }
 
-  /// Let Docusaurus handle all the remaining cases of redirects or 404 pages.
+  /// If Docusaurus produced a redirect, let's replace the domain back to clickhouse.com.
+
+  if (response.status === 301) {
+    return Response.redirect(response.headers.location.replace(config.origins.github_docs_content, config.origins.domain), 301);
+  }
+
+  /// Let Docusaurus handle all the remaining cases of 404 pages.
 
   response = new Response(response.body, response);
   addDefaultHeaders(response);
