@@ -59,11 +59,6 @@ export async function handleRequest(request: Request): Promise<Response> {
     }
   }
   
-  /// The new docs have lowest priority, because they should not shadow the old assets on the website.
-  if (url.pathname.startsWith('/docs')) {
-    return handleDocsRequest(request);
-  }
-
   /// curl https://clickhouse.com/ will output an install script. Note: HTTP2 has headers in lowercase.
   /// This is the most important part of our website, because it allows users to install ClickHouse.
   const user_agent = request.headers.get('User-Agent') || request.headers.get('user-agent') || '';
