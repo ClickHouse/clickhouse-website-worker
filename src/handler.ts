@@ -12,6 +12,7 @@ import { handlePantheonRequest } from './pantheon';
 import { handleGitHubRequest } from './github';
 import config from './config';
 
+/// Special handlers for all the domains except the main domain "clickhouse.com".
 const hostname_mapping = new Map([
   ['builds.clickhouse.com', handleBuildsRequest],
   ['repo.clickhouse.com', handleRepoRequest],
@@ -20,16 +21,19 @@ const hostname_mapping = new Map([
   ['staging.clickhouse.com', handlePantheonRequest],
 ]);
 
-/// Map data type in TypeScript is unordered, so please note that "for" loops will be not in this order.
-const prefix_mapping = new Map([
-  ['/docs/css', handleGitHubRequest],
-  ['/docs/js', handleGitHubRequest],
-  ['/docs/images', handleGitHubRequest],
-  
-  ['/docs/ru', handleGitHubRequest],
-  ['/docs/zh', handleGitHubRequest],
-  ['/docs/ja', handleGitHubRequest],
-  
+/// Prefixes for paths on the main domain "clickhouse.com".
+/// Map data type in TypeScript is unordered, so we cannot use it.
+const prefix_mapping = [
+
+  /// This is being used by the "benchmark" page, should be later moved away from the "docs" directory.
+  ['/docs/css/', handleGitHubRequest],
+  ['/docs/js/', handleGitHubRequest],
+  ['/docs/images/', handleGitHubRequest],
+
+  /// This is being used by the new Docs on Docusaurus, see the preview at https://docs-content.clickhouse.tech/
+  /// We proxy it on https://clickhouse.com/docs/ for convenience.
+  ['/docs', handleDocsRequest],
+
   ['/codebrowser', handleCodebrowserRequest],
   ['/favicon/', handleFaviconRequest],
   ['/presentations/', handlePresentationsRequest],
@@ -39,31 +43,30 @@ const prefix_mapping = new Map([
   ['/css', handleGitHubRequest],
   ['/fonts', handleGitHubRequest],
   ['/data', handleGitHubRequest],
-]);
+];
 
 export async function handleRequest(request: Request): Promise<Response> {
   let url = new URL(request.url);
+
   const hostname_handler = hostname_mapping.get(url.hostname);
   if (hostname_handler) {
     return hostname_handler(request);
   }
-  for (const [prefix, prefix_handler] of prefix_mapping.entries()) {
+
+  for (const [prefix, prefix_handler] of prefix_mapping) {
     if (url.pathname.startsWith(prefix)) {
       return prefix_handler(request);
     }
   }
   
-  /// The new docs have lowest priority, because they should not shadow the old assets on the website.
-  if (url.pathname.startsWith('/docs')) {
-    return handleDocsRequest(request);
-  }
-
-  // curl https://clickhouse.com/ will output an install script. Note: HTTP2 has headers in lowercase.
+  /// curl https://clickhouse.com/ will output an install script. Note: HTTP2 has headers in lowercase.
+  /// This is the most important part of our website, because it allows users to install ClickHouse.
   const user_agent = request.headers.get('User-Agent') || request.headers.get('user-agent') || '';
 
   if (url.pathname === '/' && user_agent.startsWith('curl/')) {
     return handleInstallScriptRequest(request);
   }
 
+  /// This is the temporary website by external developers. It covers everything that is not covered by special handlers above.
   return handlePantheonRequest(request, config.production)
 }
