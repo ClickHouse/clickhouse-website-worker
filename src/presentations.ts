@@ -1,9 +1,9 @@
 import { changeUrl } from './util';
 
 /** Redirect from
-  * https://clickhouse.tech/presentations/*
+  * https://clickhouse.com/presentations/*
   * to
-  * https://presentations.clickhouse.tech/*
+  * https://presentations.clickhouse.com/*
   *
   * Reference: https://developers.cloudflare.com/workers/examples/redirect
   *
