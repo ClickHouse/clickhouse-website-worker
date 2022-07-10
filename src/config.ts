@@ -9,7 +9,7 @@ export default {
 
     /// The content of this part of the website is hosted by external company.
     pantheon: 'live-clickhouse.pantheonsite.io',
-    pantheon_staging: 'staging-clickhouse.pantheonsite.io',
+    pantheon_staging: 'dlico9114pefj.cloudfront.net',
   },
 
   redirects: {
