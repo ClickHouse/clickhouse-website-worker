@@ -8,7 +8,7 @@ export default {
     github_docs_content: 'docs-content.clickhouse.tech',
 
     /// The content of this part of the website is hosted by external company.
-    pantheon: 'live-clickhouse.pantheonsite.io',
+    pantheon: 'dhqgwvxng9vgy.cloudfront.net',
     pantheon_staging: 'dlico9114pefj.cloudfront.net',
   },
 
