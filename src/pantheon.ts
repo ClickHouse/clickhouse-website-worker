@@ -12,8 +12,6 @@ export async function handlePantheonRequest(request: Request, production: boolea
   if (!production) {
     delete_headers = [];
     url.hostname = config.origins.pantheon_staging;
-  } else if (path === '/robots.txt') {
-    url.pathname = '/robots-live.txt';
   }
 
   const cf = {
