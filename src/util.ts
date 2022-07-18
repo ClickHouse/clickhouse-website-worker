@@ -28,7 +28,7 @@ export function addDefaultHeaders(response: Response, delete_headers: string[] =
   response.headers.set(
     'content-security-policy',
     "default-src 'self';" +
-    "script-src 'self' 'unsafe-eval' 'unsafe-inline' cdn.segment.com cdn.ampproject.org ajax.cloudflare.com static.cloudflareinsights.com boards.greenhouse.io *.algolia.net *.algolianet.com buttons.github.io yastatic.net www.googletagmanager.com www.googleadservices.com googleads.g.doubleclick.net bam.nr-data.net js-agent.newrelic.com discover.clickhouse.com munchkin.marketo.net player.vimeo.com connect.facebook.net;" +
+    "script-src 'self' 'unsafe-eval' 'unsafe-inline' cdnjs.cloudflare.com cdn.segment.com cdn.ampproject.org ajax.cloudflare.com static.cloudflareinsights.com boards.greenhouse.io *.algolia.net *.algolianet.com buttons.github.io yastatic.net www.googletagmanager.com www.googleadservices.com googleads.g.doubleclick.net bam.nr-data.net js-agent.newrelic.com discover.clickhouse.com munchkin.marketo.net player.vimeo.com connect.facebook.net;" +
     "style-src 'self' 'unsafe-inline' fonts.googleapis.com discover.clickhouse.com;" +
     "img-src * 'self' data: https:;" +
     "object-src 'self' blog-images.clickhouse.com;" +
