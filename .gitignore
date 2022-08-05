@@ -5,3 +5,4 @@ worker
 
 .cargo-ok
 .idea
+.dev.vars
