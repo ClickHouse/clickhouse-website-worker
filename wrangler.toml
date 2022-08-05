@@ -1,5 +1,6 @@
 name = "clickhouse-website"
 type = "webpack"
+compatibility_date = "2022-01-01"
 account_id = "d4fd593eebab2e3a58a599400c4cd64d"
 workers_dev = true
 webpack_config = "webpack.config.js"
