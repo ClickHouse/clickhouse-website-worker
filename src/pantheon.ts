@@ -1,4 +1,4 @@
-import { addDefaultHeaders, changeUrl, round } from './util';
+import { addDefaultHeaders, changeUrl } from './util';
 import config from './config';
 
 export async function handlePantheonRequest(request: Request, production: boolean = false) {

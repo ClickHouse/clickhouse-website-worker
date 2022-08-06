@@ -1,4 +1,4 @@
-import { addDefaultHeaders, changeUrl, round } from './util';
+import { addDefaultHeaders, changeUrl } from './util';
 
 export async function handleBuildsRequest(request: Request) {
   let url = new URL(request.url);
