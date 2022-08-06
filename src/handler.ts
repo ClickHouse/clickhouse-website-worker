@@ -7,7 +7,7 @@ import { handlePackagesRequest } from './packages';
 import { handlePresentationsRequest } from './presentations';
 import { handleRepoRequest } from './repo';
 import { handleInstallScriptRequest } from './install-script';
-import { handlePantheonRequest } from './pantheon';
+import { handleWebsiteRequest } from './website';
 import { handleGitHubRequest } from './github';
 import config from './config';
 
@@ -17,7 +17,7 @@ const hostname_mapping = new Map([
   ['repo.clickhouse.com', handleRepoRequest],
   ['repo.clickhouse.tech', handleRepoRequest],
   ['packages.clickhouse.com', handlePackagesRequest],
-  ['staging.clickhouse.com', handlePantheonRequest],
+  ['staging.clickhouse.com', handleWebsiteRequest],
 ]);
 
 /// Prefixes for paths on the main domain "clickhouse.com".
@@ -65,6 +65,6 @@ export async function handleRequest(request: Request): Promise<Response> {
     return handleInstallScriptRequest(request);
   }
 
-  /// This is the temporary website by external developers. It covers everything that is not covered by special handlers above.
-  return handlePantheonRequest(request, config.production)
+  /// This is our main websites. It covers everything that is not covered by special handlers above.
+  return handleWebsiteRequest(request, config.production)
 }

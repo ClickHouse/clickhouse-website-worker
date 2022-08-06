@@ -18,6 +18,6 @@ async function handleEvent(event: FetchEvent) {
 
 async function fallbackResponse(request: Request): Promise<Response> {
   let url = new URL(request.url);
-  url.hostname = config.origins.pantheon;
+  url.hostname = config.origins.website;
   return await fetch(changeUrl(request, url));
 }
