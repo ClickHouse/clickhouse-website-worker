@@ -2,7 +2,6 @@ import { addDefaultHeaders, changeUrl } from './util';
 import { handleBuildsRequest } from './builds';
 import { handleCodebrowserRequest } from './codebrowser';
 import { handleDocsRequest } from './docs';
-import { handleFaviconRequest } from './favicon';
 import { handleLearnRequest } from './learn';
 import { handlePackagesRequest } from './packages';
 import { handlePresentationsRequest } from './presentations';
@@ -35,7 +34,6 @@ const prefix_mapping = [
   ['/docs', handleDocsRequest],
 
   ['/codebrowser', handleCodebrowserRequest],
-  ['/favicon/', handleFaviconRequest],
   ['/presentations/', handlePresentationsRequest],
   ['/learn', handleLearnRequest],
   ['/benchmark', handleGitHubRequest],
