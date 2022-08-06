@@ -55,6 +55,9 @@ export async function handleRequest(request: Request): Promise<Response> {
   if (url.pathname == '/benchmark' || url.pathname == '/benchmark/' || url.pathname.startsWith('/benchmark/dbms')) {
     return Response.redirect('https://benchmark.clickhouse.com/', 301);
   }
+  if (url.pathname.startsWith('/benchmark/hardware')) {
+    return Response.redirect('https://benchmark.clickhouse.com/hardware', 301);
+  }
 
   for (const [prefix, prefix_handler] of prefix_mapping) {
     if (url.pathname.startsWith(prefix)) {
