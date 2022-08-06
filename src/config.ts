@@ -7,15 +7,15 @@ export default {
     github: 'content.clickhouse.com',
     github_docs_content: 'docs-content.clickhouse.tech',
 
-    /// The content of this part of the website is hosted by external company.
-    pantheon: 'dhqgwvxng9vgy.cloudfront.net',
-    pantheon_staging: 'dlico9114pefj.cloudfront.net',
+    /// The content of this part of our new website.
+    website: 'dhqgwvxng9vgy.cloudfront.net',
+    website_staging: 'dlico9114pefj.cloudfront.net',
   },
 
   redirects: {
     github: 'clickhouse.com',
-    pantheon: 'clickhouse.com',
-    pantheon_staging: 'staging.clickhouse.com',
+    website: 'clickhouse.com',
+    website_staging: 'staging.clickhouse.com',
   },
 
   codebrowser: 'clickhouse-test-reports.s3.amazonaws.com',
