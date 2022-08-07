@@ -45,10 +45,10 @@ export async function handleRequest(request: Request): Promise<Response> {
     return Response.redirect('https://benchmark.clickhouse.com/', 301);
   }
   if (url.pathname.startsWith('/benchmark/hardware')) {
-    return Response.redirect('https://benchmark.clickhouse.com/hardware', 301);
+    return Response.redirect('https://benchmark.clickhouse.com/hardware/', 301);
   }
   if (url.pathname.startsWith('/benchmark/versions')) {
-    return Response.redirect('https://benchmark.clickhouse.com/versions', 301);
+    return Response.redirect('https://benchmark.clickhouse.com/versions/', 301);
   }
 
   for (const [prefix, prefix_handler] of prefix_mapping) {
