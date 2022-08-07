@@ -23,23 +23,12 @@ const hostname_mapping = new Map([
 /// Prefixes for paths on the main domain "clickhouse.com".
 /// Map data type in TypeScript is unordered, so we cannot use it.
 const prefix_mapping = [
-
-  /// This is being used by the "benchmark" page, should be later moved away from the "docs" directory.
-  ['/docs/css/', handleGitHubRequest],
-  ['/docs/js/', handleGitHubRequest],
-  ['/docs/images/', handleGitHubRequest],
-
   /// This is being used by the new Docs on Docusaurus, see the preview at https://docs-content.clickhouse.tech/
   /// We proxy it on https://clickhouse.com/docs/ for convenience.
   ['/docs', handleDocsRequest],
-
   ['/codebrowser', handleCodebrowserRequest],
   ['/presentations/', handlePresentationsRequest],
   ['/learn', handleLearnRequest],
-  ['/benchmark', handleGitHubRequest],
-  ['/js', handleGitHubRequest],
-  ['/css', handleGitHubRequest],
-  ['/fonts', handleGitHubRequest],
   ['/data', handleGitHubRequest],
 ];
 
@@ -57,6 +46,9 @@ export async function handleRequest(request: Request): Promise<Response> {
   }
   if (url.pathname.startsWith('/benchmark/hardware')) {
     return Response.redirect('https://benchmark.clickhouse.com/hardware', 301);
+  }
+  if (url.pathname.startsWith('/benchmark/versions')) {
+    return Response.redirect('https://benchmark.clickhouse.com/versions', 301);
   }
 
   for (const [prefix, prefix_handler] of prefix_mapping) {
