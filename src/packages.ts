@@ -40,8 +40,7 @@ export async function handlePackagesRequest(request: Request) {
   const cf = {
     cf: {
       cacheTtlByStatus: {
-        // Return files with 7d TTL
-        "200-299": 120,
+        "200-299": 300,
         "301-302": 20,
         "400-599": 10,
       },
@@ -64,8 +63,8 @@ async function getRedirectedPackage(request: Request, url: URL, cacheKey: string
   const cf = {
     cf: {
       cacheTtlByStatus: {
-        // Return files with 7d TTL
-        "200-299": 7 * 86400,
+        // Return files with 14d TTL
+        "200-299": 14 * 86400,
         "301-302": 0,
         "400-599": 10,
       },
