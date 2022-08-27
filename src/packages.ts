@@ -14,6 +14,14 @@ const slash = `<!DOCTYPE html>
 export async function handlePackagesRequest(request: Request) {
   const domain = JFROG_DOMAIN;
   let url = new URL(request.url);
+  // hostname in the request
+  const hostname = url.hostname;
+  // Redirect http to https
+  if (url.protocol === "http:") {
+    url.protocol = "https:";
+    return Response.redirect(url.toString(), 301);
+  };
+  // Return pre-generated page for the home page
   if (url.pathname === '/') {
     const init = {
       headers: {
@@ -22,9 +30,10 @@ export async function handlePackagesRequest(request: Request) {
     };
     return new Response(slash, init);
   }
-  const origin = url.hostname;
-  // Add auth header and prevent redirecting to UI interface
+
+  // Create a copy of request for writeable headers
   request = new Request(url.toString(), request);
+  // Add auth header and prevent redirecting to UI interface
   request.headers.set('X-JFrog-Art-Api', JFROG_ART_API_KEY);
   request.headers.set('User-Agent', 'curl');
 
@@ -32,8 +41,10 @@ export async function handlePackagesRequest(request: Request) {
   const path = url.pathname;
   url.hostname = domain;
   url.pathname = pathPrefix + path;
+
+  // Don't follow redirects for packages, instead cache response with original names
   if (path.endsWith('.deb') || path.endsWith('.rpm') || path.endsWith('.tgz')) {
-    return getRedirectedPackage(request, url, `https://${origin}/${url.pathname}`, 0);
+    return getRedirectedPackage(request, url, `https://${hostname}/${url.pathname}`, 0);
   }
 
   // For redirects we rewrite location to a proper domain
@@ -46,12 +57,16 @@ export async function handlePackagesRequest(request: Request) {
       },
     }
   }
+
+  // Fetch origin
   let response = await fetch(changeUrl(request, url), init);
   response = new Response(response.body, response);
+
+  // Follow original redirect for non-package requests
   const location = response.headers.get('location');
   const toReplace = domain + pathPrefix;
   if (location && location.indexOf(toReplace) >= 0) {
-    response.headers.set('location', location.replace(toReplace, origin));
+    response.headers.set('location', location.replace(toReplace, hostname));
   }
   return response;
 }
@@ -60,7 +75,7 @@ async function getRedirectedPackage(request: Request, url: URL, cacheKey: string
   // Jfrog put big files to S3 and redirects original requests there
   // The 5 redirects is the maximum depth
   let maxRedirects = 5;
-  const cf = {
+  const init = {
     cf: {
       cacheTtlByStatus: {
         // Return files with 14d TTL
@@ -72,7 +87,7 @@ async function getRedirectedPackage(request: Request, url: URL, cacheKey: string
       cacheEverything: true,
     },
   };
-  let response = await fetch(changeUrl(request, url), cf);
+  let response = await fetch(changeUrl(request, url), init);
   const location = response.headers.get('location');
   if (location && redirects < maxRedirects) {
     return getRedirectedPackage(request, new URL(location), cacheKey, redirects+1);
