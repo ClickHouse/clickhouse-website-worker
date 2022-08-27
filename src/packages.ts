@@ -1,6 +1,6 @@
 import { addDefaultHeaders, changeUrl } from './util';
 
-const domain = 'clickhousedb.jfrog.io';
+const domain = JFROG_DOMAIN;
 const pathPrefix = '/artifactory';
 const slash = `<!DOCTYPE html>
 <html>
@@ -25,7 +25,7 @@ export async function handlePackagesRequest(request: Request) {
   const origin = url.hostname;
   // Add auth header and prevent redirecting to UI interface
   request = new Request(url.toString(), request);
-  request.headers.set('X-JFrog-Art-Api', JFROG_API_KEY);
+  request.headers.set('X-JFrog-Art-Api', JFROG_ART_API_KEY);
   request.headers.set('User-Agent', 'curl');
 
   // Generate new URL
@@ -37,7 +37,7 @@ export async function handlePackagesRequest(request: Request) {
   }
 
   // For redirects we rewrite location to a proper domain
-  const cf = {
+  const init = {
     cf: {
       cacheTtlByStatus: {
         "200-299": 300,
@@ -46,7 +46,7 @@ export async function handlePackagesRequest(request: Request) {
       },
     }
   }
-  let response = await fetch(changeUrl(request, url), cf);
+  let response = await fetch(changeUrl(request, url), init);
   response = new Response(response.body, response);
   const location = response.headers.get('location');
   const toReplace = domain + pathPrefix;
