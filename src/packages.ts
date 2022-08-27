@@ -14,6 +14,14 @@ const slash = `<!DOCTYPE html>
 export async function handlePackagesRequest(request: Request) {
   const domain = JFROG_DOMAIN;
   let url = new URL(request.url);
+  // hostname in the request
+  const hostname = url.hostname;
+  // Redirect http to https
+  if (url.protocol === "http:") {
+    url.protocol = "https:";
+    return Response.redirect(url.toString(), 301);
+  };
+  // Return pre-generated page for the home page
   if (url.pathname === '/') {
     const init = {
       headers: {
@@ -22,8 +30,6 @@ export async function handlePackagesRequest(request: Request) {
     };
     return new Response(slash, init);
   }
-  const origin = url.hostname;
-  // Add auth header and prevent redirecting to UI interface
   request = new Request(url.toString(), request);
   request.headers.set('X-JFrog-Art-Api', JFROG_ART_API_KEY);
   request.headers.set('User-Agent', 'curl');
