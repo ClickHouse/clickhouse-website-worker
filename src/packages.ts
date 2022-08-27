@@ -1,6 +1,5 @@
 import { addDefaultHeaders, changeUrl } from './util';
 
-const domain = JFROG_DOMAIN;
 const pathPrefix = '/artifactory';
 const slash = `<!DOCTYPE html>
 <html>
@@ -13,6 +12,7 @@ const slash = `<!DOCTYPE html>
 </body></html>`
 
 export async function handlePackagesRequest(request: Request) {
+  const domain = JFROG_DOMAIN;
   let url = new URL(request.url);
   if (url.pathname === '/') {
     const init = {
