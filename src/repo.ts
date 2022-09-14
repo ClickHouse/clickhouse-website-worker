@@ -13,6 +13,8 @@ export async function handleRepoRequest(request: Request) {
       },
     };
     return fetch(changeUrl(request, url), cf);
+  } else if (path.endsWith('/')) {
+    return Response.redirect('https://packages.clickhouse.com/', 302);
   } else {
     return fetch(changeUrl(request, url));
   }
