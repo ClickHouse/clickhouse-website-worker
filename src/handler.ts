@@ -2,13 +2,13 @@ import { addDefaultHeaders, changeUrl } from './util';
 import { handleBuildsRequest } from './builds';
 import { handleCodebrowserRequest } from './codebrowser';
 import { handleDocsRequest } from './docs';
+import { handleGitHubRequest } from './github';
+import { handleInstallScriptRequest } from './install-script';
 import { handleLearnRequest } from './learn';
 import { handlePackagesRequest } from './packages';
 import { handlePresentationsRequest } from './presentations';
 import { handleRepoRequest } from './repo';
-import { handleInstallScriptRequest } from './install-script';
 import { handleWebsiteRequest } from './website';
-import { handleGitHubRequest } from './github';
 import config from './config';
 
 /// Special handlers for all the domains except the main domain "clickhouse.com".
