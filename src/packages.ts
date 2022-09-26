@@ -81,8 +81,8 @@ export async function handlePackagesRequest(request: Request) {
     prefix += '/';
     redirect = true;
   }
-  const directoryListingLimitParam = searchParams.get('directoryListingLimit') || undefined;
   const limit = 1000;
+  const directoryListingLimitParam = searchParams.get('directoryListingLimit') || limit.toString();
   const options: R2ListOptions = { delimiter: '/', limit, prefix: prefix === '' ? undefined : prefix, cursor: searchParams.get('cursor') || undefined };
   console.log(`list: ${JSON.stringify(options)}`);
   const objects = await bucket.list(options);
