@@ -82,6 +82,7 @@ export async function handlePackagesRequest(request: Request) {
       if (obj === null) throw new Error(`Object ${key} existed for .get with range, but not without`);
       disableRangeRequests = true;
     }
+    // We exlicitly DO NOT USE caching here, because CF Caches api does not support TTL
     return computeObjResponse(obj, range ? 206 : 200, { range, onlyIf, disableRangeRequests });
   }
 
