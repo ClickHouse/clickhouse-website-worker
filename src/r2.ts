@@ -76,6 +76,10 @@ export function preconditionFailed(): Response {
   return new Response('precondition failed', { status: 412 });
 }
 
+export function badRequest(message: string): Response {
+  return new Response(message, { status: 400 });
+}
+
 export function permanentRedirect(opts: { location: string }): Response {
   const { location } = opts;
   return new Response(undefined, { status: 308, headers: { 'location': location } });

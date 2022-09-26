@@ -4,6 +4,7 @@
 import { addDefaultHeaders, changeUrl } from './util';
 import {
   TEXT_HTML_UTF8,
+  badRequest,
   computeDirectoryListingHtml,
   computeHeaders,
   computeObjResponse,
@@ -43,7 +44,18 @@ export async function handlePackagesRequest(request: Request) {
     console.log(`bucket.${method.toLowerCase()} ${key} ${JSON.stringify(options)}`);
     return method === 'GET' ? (options ? bucket.get(key, options) : bucket.get(key)) : bucket.head(key);
   };
-  obj = key === '' ? null : await getOrHead(key, { range, onlyIf });
+  try {
+    obj = key === '' ? null : await getOrHead(key, { range, onlyIf });
+  } catch(e: unknown) {
+    let error = "Error on receiving object:";
+    if (typeof e === "string") {
+      error = `${error} ${e}`;
+    } else if (e instanceof Error) {
+      error = `${error} ${e.message}`;
+    }
+    console.log(error);
+    return badRequest(error);
+  }
 
   if (!obj) {
     if (key === '' || key.endsWith('/')) { // object not found, append index.html and try again (like pages)
