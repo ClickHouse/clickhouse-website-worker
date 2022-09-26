@@ -8,3 +8,6 @@ webpack_config = "webpack.config.js"
 [env.production]
 route = "clickhouse.com/*"
 zone_id = "4fc6fb1d46e87851605aa7fa69ca6fe0"
+r2_buckets = [
+{ binding = 'PACKAGES_BUCKET', bucket_name = 'packages', preview_bucket_name = 'packages' }
+]
