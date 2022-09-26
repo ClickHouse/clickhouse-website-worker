@@ -80,6 +80,10 @@ export function badRequest(message: string): Response {
   return new Response(message, { status: 400 });
 }
 
+export function rangeNotSatisfied(size: number): Response {
+  return new Response(`The file size is ${size}`, { status: 416, headers: { "Content-Range": `bytes */${size}` } });
+}
+
 export function permanentRedirect(opts: { location: string }): Response {
   const { location } = opts;
   return new Response(undefined, { status: 308, headers: { 'location': location } });

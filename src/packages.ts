@@ -9,6 +9,7 @@ import {
   computeHeaders,
   computeObjResponse,
   permanentRedirect,
+  rangeNotSatisfied,
   temporaryRedirect,
   tryParseR2Conditional,
   tryParseRange,
@@ -44,16 +45,23 @@ export async function handlePackagesRequest(request: Request) {
     console.log(`bucket.${method.toLowerCase()} ${key} ${JSON.stringify(options)}`);
     return method === 'GET' ? (options ? bucket.get(key, options) : bucket.get(key)) : bucket.head(key);
   };
+
   try {
     obj = key === '' ? null : await getOrHead(key, { range, onlyIf });
   } catch(e: unknown) {
     let error = "Error on receiving object:";
+    let rangeError: boolean = false;
     if (typeof e === "string") {
       error = `${error} ${e}`;
     } else if (e instanceof Error) {
       error = `${error} ${e.message}`;
+      rangeError = range && e.message === "get: The requested range is not satisfiable (10039)";
     }
     console.log(error);
+    if (rangeError) {
+      obj = await bucket.head(key);
+      return rangeNotSatisfied(obj.size);
+    }
     return badRequest(error);
   }
 
