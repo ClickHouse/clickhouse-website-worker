@@ -4,14 +4,34 @@
 import { addDefaultHeaders, changeUrl } from './util';
 import {
   TEXT_HTML_UTF8,
+  badRequest,
   computeDirectoryListingHtml,
   computeHeaders,
   computeObjResponse,
+  forbidden,
+  notFound,
   permanentRedirect,
+  rangeNotSatisfied,
   temporaryRedirect,
   tryParseR2Conditional,
   tryParseRange,
 } from './r2';
+
+// We explicitly allow only these paths
+const allowedDirectories = ["deb", "repo-archive", "rpm", "tgz"];
+
+function isAllowedKey(key: string): boolean {
+  if (key === "") {
+    return true;
+  }
+  for (let i in allowedDirectories) {
+    if (key.startsWith(`${allowedDirectories[i]}/`)) {
+      return true;
+    }
+  };
+  console.log(`key "${key}" is not allowed`);
+  return false;
+}
 
 export async function handlePackagesRequest(request: Request) {
   let url = new URL(request.url);
@@ -29,9 +49,14 @@ export async function handlePackagesRequest(request: Request) {
       status: 405
     })
   }
-  const headers = request.headers;
+
   const { pathname, searchParams } = url;
   let key = pathname.substring(1); // strip leading slash
+  if (!isAllowedKey(key)) {
+    return forbidden();
+  }
+
+  const headers = request.headers;
   let bucket : R2Bucket = PACKAGES_BUCKET;
   key = decodeURIComponent(key);
 
@@ -43,7 +68,25 @@ export async function handlePackagesRequest(request: Request) {
     console.log(`bucket.${method.toLowerCase()} ${key} ${JSON.stringify(options)}`);
     return method === 'GET' ? (options ? bucket.get(key, options) : bucket.get(key)) : bucket.head(key);
   };
-  obj = key === '' ? null : await getOrHead(key, { range, onlyIf });
+
+  try {
+    obj = key === '' ? null : await getOrHead(key, { range, onlyIf });
+  } catch(e: unknown) {
+    let error = "Error on receiving object:";
+    let rangeError: boolean = false;
+    if (typeof e === "string") {
+      error = `${error} ${e}`;
+    } else if (e instanceof Error) {
+      error = `${error} ${e.message}`;
+      rangeError = range && e.message === "get: The requested range is not satisfiable (10039)";
+    }
+    console.log(error);
+    if (rangeError) {
+      obj = await bucket.head(key);
+      return rangeNotSatisfied(obj.size);
+    }
+    return badRequest(error);
+  }
 
   if (!obj) {
     if (key === '' || key.endsWith('/')) { // object not found, append index.html and try again (like pages)
@@ -70,6 +113,7 @@ export async function handlePackagesRequest(request: Request) {
       if (obj === null) throw new Error(`Object ${key} existed for .get with range, but not without`);
       disableRangeRequests = true;
     }
+    // We exlicitly DO NOT USE caching here, because CF Caches api does not support TTL
     return computeObjResponse(obj, range ? 206 : 200, { range, onlyIf, disableRangeRequests });
   }
 
@@ -81,8 +125,8 @@ export async function handlePackagesRequest(request: Request) {
     prefix += '/';
     redirect = true;
   }
-  const directoryListingLimitParam = searchParams.get('directoryListingLimit') || undefined;
   const limit = 1000;
+  const directoryListingLimitParam = searchParams.get('directoryListingLimit') || limit.toString();
   const options: R2ListOptions = { delimiter: '/', limit, prefix: prefix === '' ? undefined : prefix, cursor: searchParams.get('cursor') || undefined };
   console.log(`list: ${JSON.stringify(options)}`);
   const objects = await bucket.list(options);
@@ -92,7 +136,5 @@ export async function handlePackagesRequest(request: Request) {
     return redirect ? temporaryRedirect({ location: '/' + prefix }) : new Response(computeDirectoryListingHtml(objects, { prefix, cursor, directoryListingLimitParam }), { headers: { 'content-type': TEXT_HTML_UTF8 } });
   }
 
-  return new Response(`Not found`, {
-    status: 404
-  })
+  return notFound;
 }

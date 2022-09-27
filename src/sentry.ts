@@ -33,12 +33,20 @@ export function sendExceptionToSentry(error: Error, request: Request): Promise<R
   const sentry_url = `https://o388870.ingest.sentry.io/api/5246652/store/?sentry_key=${sentry_key}&sentry_version=7`;
   const error_type = error.name;
   const error_message = error && error.message ? error.message : 'Unknown';
+  let headers: { [name: string]: string; } = {};
+  ["range", "user-agent", "host"].forEach(function (header: string) {
+    const value = request.headers.get(header);
+    if (value) {
+      headers[header] = value;
+    }
+  });
   const body = {
     logger: 'javascript',
     platform: 'javascript',
     request: {
       method: request.method.toUpperCase(),
-      url: request.url.toString()
+      url: request.url.toString(),
+      headers: headers,
     },
     exception: {
       values: [
