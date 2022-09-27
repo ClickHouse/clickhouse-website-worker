@@ -72,12 +72,20 @@ export function unmodified(): Response {
   return new Response(undefined, { status: 304 });
 }
 
-export function preconditionFailed(): Response {
-  return new Response('precondition failed', { status: 412 });
-}
-
 export function badRequest(message: string): Response {
   return new Response(message, { status: 400 });
+}
+
+export function forbidden(): Response {
+  return new Response("Forbidden", { status: 403 });
+}
+
+export function notFound(): Response {
+  return new Response("Not Found", { status: 404 });
+}
+
+export function preconditionFailed(): Response {
+  return new Response('precondition failed', { status: 412 });
 }
 
 export function rangeNotSatisfied(size: number): Response {

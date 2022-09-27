@@ -8,12 +8,30 @@ import {
   computeDirectoryListingHtml,
   computeHeaders,
   computeObjResponse,
+  forbidden,
+  notFound,
   permanentRedirect,
   rangeNotSatisfied,
   temporaryRedirect,
   tryParseR2Conditional,
   tryParseRange,
 } from './r2';
+
+// We explicitly allow only these paths
+const allowedDirectories = ["deb", "repo-archive", "rpm", "tgz"];
+
+function isAllowedKey(key: string): boolean {
+  if (key === "") {
+    return true;
+  }
+  for (let i in allowedDirectories) {
+    if (key.startsWith(`${allowedDirectories[i]}/`)) {
+      return true;
+    }
+  };
+  console.log(`key "${key}" is not allowed`);
+  return false;
+}
 
 export async function handlePackagesRequest(request: Request) {
   let url = new URL(request.url);
@@ -31,9 +49,14 @@ export async function handlePackagesRequest(request: Request) {
       status: 405
     })
   }
-  const headers = request.headers;
+
   const { pathname, searchParams } = url;
   let key = pathname.substring(1); // strip leading slash
+  if (!isAllowedKey(key)) {
+    return forbidden();
+  }
+
+  const headers = request.headers;
   let bucket : R2Bucket = PACKAGES_BUCKET;
   key = decodeURIComponent(key);
 
@@ -113,7 +136,5 @@ export async function handlePackagesRequest(request: Request) {
     return redirect ? temporaryRedirect({ location: '/' + prefix }) : new Response(computeDirectoryListingHtml(objects, { prefix, cursor, directoryListingLimitParam }), { headers: { 'content-type': TEXT_HTML_UTF8 } });
   }
 
-  return new Response(`Not found`, {
-    status: 404
-  })
+  return notFound;
 }
