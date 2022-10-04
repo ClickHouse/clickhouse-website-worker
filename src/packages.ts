@@ -89,6 +89,7 @@ export async function handlePackagesRequest(request: Request) {
   }
 
   if (!obj) {
+    console.log(`Object ${key} not found`);
     if (key === '' || key.endsWith('/')) { // object not found, append index.html and try again (like pages)
       key += 'index.html';
       obj = await getOrHead(key, { range, onlyIf });
@@ -97,6 +98,9 @@ export async function handlePackagesRequest(request: Request) {
       obj = await bucket.head(key);
       if (obj) {
         return permanentRedirect({ location: pathname + '/' });
+      } else {
+        // The object is not found at all
+        return notFound();
       }
     }
   }
@@ -136,5 +140,5 @@ export async function handlePackagesRequest(request: Request) {
     return redirect ? temporaryRedirect({ location: '/' + prefix }) : new Response(computeDirectoryListingHtml(objects, { prefix, cursor, directoryListingLimitParam }), { headers: { 'content-type': TEXT_HTML_UTF8 } });
   }
 
-  return notFound;
+  return notFound();
 }
