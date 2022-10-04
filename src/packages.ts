@@ -96,9 +96,6 @@ export async function handlePackagesRequest(request: Request): Promise<Response>
       obj = await bucket.head(key);
       if (obj) {
         return permanentRedirect({ location: pathname + '/' });
-      } else {
-        // The object is not found at all
-        return notFound();
       }
     }
   }
