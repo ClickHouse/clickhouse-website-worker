@@ -33,7 +33,7 @@ function isAllowedKey(key: string): boolean {
   return false;
 }
 
-export async function handlePackagesRequest(request: Request) {
+export async function handlePackagesRequest(request: Request): Promise<Response> {
   let url = new URL(request.url);
   // hostname in the request
   const hostname = url.hostname;
@@ -45,9 +45,7 @@ export async function handlePackagesRequest(request: Request) {
   const objectName = url.pathname.slice(1);
   const method = request.method;
   if (method != "GET" && method != "HEAD") {
-    return new Response(`Unsupported method`, {
-      status: 405
-    })
+    return new Response(`Unsupported method`, {status: 405});
   }
 
   const { pathname, searchParams } = url;
@@ -60,7 +58,7 @@ export async function handlePackagesRequest(request: Request) {
   let bucket : R2Bucket = PACKAGES_BUCKET;
   key = decodeURIComponent(key);
 
-  console.log(`${request.method} object ${objectName}: ${request.url}`)
+  console.log(`${request.method} object ${objectName}: ${request.url}`);
   let range = tryParseRange(headers);
   const onlyIf = tryParseR2Conditional(headers);
   let obj: R2Object | null = null;
@@ -109,7 +107,7 @@ export async function handlePackagesRequest(request: Request) {
     // choose not to satisfy range requests for encoded content
     // unfortunately we don't know it's encoded until after the first request
     let disableRangeRequests = false;
-    console.log("obj", JSON.stringify(obj))
+    console.log("obj", JSON.stringify(obj));
     if (range && computeHeaders(obj, { range }).has('content-encoding')) {
       console.log(`re-request without range`);
       range = undefined;
