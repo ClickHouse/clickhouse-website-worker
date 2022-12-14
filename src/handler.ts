@@ -5,6 +5,7 @@ import { handleDocsRequest } from './docs';
 import { handleGitHubRequest } from './github';
 import { handleInstallScriptRequest } from './install-script';
 import { handleLearnRequest } from './learn';
+import { handleDebugRequest } from './debug';
 import { handlePackagesRequest } from './packages';
 import { handlePresentationsRequest } from './presentations';
 import { handleRepoRequest } from './repo';
@@ -29,6 +30,7 @@ const prefix_mapping = [
   ['/codebrowser', handleCodebrowserRequest],
   ['/presentations/', handlePresentationsRequest],
   ['/learn', handleLearnRequest],
+  ['/debug', handleDebugRequest],
   ['/data', handleGitHubRequest],
 ];
 
@@ -56,7 +58,7 @@ export async function handleRequest(request: Request): Promise<Response> {
       return prefix_handler(request);
     }
   }
-  
+
   /// curl https://clickhouse.com/ will output an install script. Note: HTTP2 has headers in lowercase.
   /// This is the most important part of our website, because it allows users to install ClickHouse.
   const user_agent = request.headers.get('User-Agent') || request.headers.get('user-agent') || '';
