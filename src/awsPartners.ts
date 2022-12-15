@@ -1,9 +1,9 @@
 import { addDefaultHeaders, changeUrl } from './util';
 
 /** Proxy requests to
-  * https://clickhouse.com/learn/*
+  * https://clickhouse.com/partners/aws/*
   * from
-  * https://clickhouselearn.github.io/home/*
+  * https://clickhouselearn.github.io/partners/aws/*
   *
   */
 export async function handleAwsPartnersRequest(request: Request) {
