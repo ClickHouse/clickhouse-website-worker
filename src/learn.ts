@@ -25,7 +25,6 @@ export async function handleLearnRequest(request: Request) {
 
   } else {
     url.hostname = 'clickhouselearn.github.io';
-    url.pathname = url.pathname.replace('learn', 'home');
     proxy = await fetch(url.toString());
   }
 
