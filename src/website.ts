@@ -7,12 +7,14 @@ export async function handleWebsiteRequest(
 ) {
   let url = new URL(request.url);
   let delete_headers = ['x-robots-tag'];
-  const path = url.pathname;
+
+  const isStaging2 = !production && url.hostname.startsWith('staging2')
+
   url.hostname = config.origins.website;
 
   if (!production) {
     delete_headers = [];
-    url.hostname = url.hostname.startsWith('staging2')
+    url.hostname = isStaging2
       ? config.origins.website_staging2
       : config.origins.website_staging;
   }
