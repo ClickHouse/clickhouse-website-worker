@@ -20,6 +20,7 @@ const hostname_mapping = new Map([
   ['repo.clickhouse.tech', handleRepoRequest],
   ['packages.clickhouse.com', handlePackagesRequest],
   ['staging.clickhouse.com', handleWebsiteRequest],
+  ['staging2.clickhouse.com', handleWebsiteRequest],
 ]);
 
 /// Prefixes for paths on the main domain "clickhouse.com".
