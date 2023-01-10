@@ -8,13 +8,14 @@ export async function handleWebsiteRequest(
   let url = new URL(request.url);
   let delete_headers = ['x-robots-tag'];
   const path = url.pathname;
-  url.hostname = config.origins.website;
 
   if (!production) {
     delete_headers = [];
     url.hostname = url.hostname.startsWith('staging2')
       ? config.origins.website_staging2
       : config.origins.website_staging;
+  } else {
+     url.hostname = config.origins.website; 
   }
 
   const cf = {
