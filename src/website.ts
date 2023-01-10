@@ -1,17 +1,20 @@
 import { addDefaultHeaders, changeUrl } from './util';
 import config from './config';
 
-export async function handleWebsiteRequest(request: Request, production: boolean = false) {
+export async function handleWebsiteRequest(
+  request: Request,
+  production: boolean = false,
+) {
   let url = new URL(request.url);
-  let delete_headers = [
-    'x-robots-tag'
-  ];
+  let delete_headers = ['x-robots-tag'];
   const path = url.pathname;
-  url.hostname = config.origins.website
+  url.hostname = config.origins.website;
 
   if (!production) {
     delete_headers = [];
-    url.hostname = config.origins.website_staging;
+    url.hostname = url.hostname.startsWith('staging2')
+      ? config.origins.website_staging2
+      : config.origins.website_staging;
   }
 
   const cf = {
