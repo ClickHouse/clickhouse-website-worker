@@ -9,7 +9,7 @@ export default {
 
     /// The content of this part of our new website.
     website: 'dhqgwvxng9vgy.cloudfront.net',
-    website_staging: 'staging-marketing-website-clickhouse.vercel.app',
+    website_staging: 'dlico9114pefj.cloudfront.net',
     website_staging2: 'staging-marketing-website-clickhouse.vercel.app',
   },
 
