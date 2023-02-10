@@ -51,6 +51,10 @@ export function addDefaultHeaders(response: Response, delete_headers: string[] =
       );
     }
   }
+  const contentType = response.headers.get('content-type');
+  if (contentType === 'application/octet-stream') {
+    response.headers.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+  }
 }
 
 export function changeUrl(req: Request, new_url: URL): Request {
