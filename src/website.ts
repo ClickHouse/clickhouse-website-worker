@@ -25,6 +25,10 @@ export async function handleWebsiteRequest(
   };
   let response = await fetch(changeUrl(request, url), cf);
   response = new Response(response.body, response);
+
+  if (!production && request.headers.has('rsc') && url.hostname.startsWith('staging.')) {
+    response.headers.set('Cache-Control', 'private, must-revalidate');
+  }
   addDefaultHeaders(response, delete_headers);
   return response;
 }
