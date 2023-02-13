@@ -11,6 +11,12 @@ export async function handleWebsiteRequest(
 
   if (!production) {
     delete_headers = [];
+    if (request.headers.has('rsc') && url.hostname.startsWith('staging.')) {
+      const deleteRequestHeaders = ['rsc', 'next-router-state-tree', 'next-router-prefetch']
+      for (const param of deleteRequestHeaders) {
+        request.headers.delete(param);
+      }
+    }
     url.hostname = url.hostname.startsWith('staging2')
       ? config.origins.website_staging2
       : config.origins.website_staging;
