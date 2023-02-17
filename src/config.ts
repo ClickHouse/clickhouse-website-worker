@@ -8,7 +8,7 @@ export default {
     github_docs_content: 'docs-content.clickhouse.tech',
 
     /// The content of this part of our new website.
-    website: 'dhqgwvxng9vgy.cloudfront.net',
+    website: 'production-marketing-website.vercel.app',
     website_staging: 'staging-marketing-website-clickhouse.vercel.app',
     website_staging2: 'dlico9114pefj.cloudfront.net',
   },
