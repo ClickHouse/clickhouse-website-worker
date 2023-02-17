@@ -4,7 +4,6 @@ import { handleCodebrowserRequest } from './codebrowser';
 import { handleDocsRequest } from './docs';
 import { handleGitHubRequest } from './github';
 import { handleInstallScriptRequest } from './install-script';
-import { handleLearnRequest } from './learn';
 import { handleDebugRequest } from './debug';
 import { handleAwsPartnersRequest } from './awsPartners';
 import { handlePackagesRequest } from './packages';
@@ -31,7 +30,6 @@ const prefix_mapping = [
   ['/docs', handleDocsRequest],
   ['/codebrowser', handleCodebrowserRequest],
   ['/presentations/', handlePresentationsRequest],
-  ['/learn', handleLearnRequest],
   ['/debug', handleDebugRequest],
   ['/partners/aws', handleAwsPartnersRequest],
   ['/data', handleGitHubRequest],
