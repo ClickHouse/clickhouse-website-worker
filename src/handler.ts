@@ -1,11 +1,9 @@
-import { addDefaultHeaders, changeUrl } from './util';
 import { handleBuildsRequest } from './builds';
 import { handleCodebrowserRequest } from './codebrowser';
 import { handleDocsRequest } from './docs';
 import { handleGitHubRequest } from './github';
 import { handleInstallScriptRequest } from './install-script';
 import { handleDebugRequest } from './debug';
-import { handleAwsPartnersRequest } from './awsPartners';
 import { handlePackagesRequest } from './packages';
 import { handlePresentationsRequest } from './presentations';
 import { handleRepoRequest } from './repo';
@@ -31,7 +29,6 @@ const prefix_mapping = [
   ['/codebrowser', handleCodebrowserRequest],
   ['/presentations/', handlePresentationsRequest],
   ['/debug', handleDebugRequest],
-  ['/partners/aws', handleAwsPartnersRequest],
   ['/data', handleGitHubRequest],
 ];
 

@@ -6,9 +6,7 @@ export async function handleWebsiteRequest(
   production: boolean = false,
 ) {
   let url = new URL(request.url);
-  const isStaging = url.hostname.startsWith('staging.')
   let delete_headers = ['x-robots-tag'];
-  const path = url.pathname;
 
   if (!production) {
     delete_headers = [];
@@ -27,9 +25,6 @@ export async function handleWebsiteRequest(
   let response = await fetch(changeUrl(request, url), cf);
   response = new Response(response.body, response);
 
-  if (!production && request.headers.has('rsc') && isStaging) {
-    response.headers.set('Cache-Control', 'private, must-revalidate');
-  }
   addDefaultHeaders(response, delete_headers);
   return response;
 }
