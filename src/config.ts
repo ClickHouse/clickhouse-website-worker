@@ -4,7 +4,7 @@ export default {
   origins: {
     /// The content of this part of the website is hosted by GitHub Pages.
     /// We only proxy it on clickhouse.com.
-    github: 'content.clickhouse.com',
+    github: 'raw.githubusercontent.com',
     github_docs_content: 'docs-content.clickhouse.tech',
 
     /// The content of this part of our new website.
