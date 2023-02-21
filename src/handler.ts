@@ -35,14 +35,6 @@ const prefix_mapping = [
 export async function handleRequest(request: Request): Promise<Response> {
   let url = new URL(request.url);
 
-  /// curl https://clickhouse.com/ will output an install script. Note: HTTP2 has headers in lowercase.
-  /// This is the most important part of our website, because it allows users to install ClickHouse.
-  const user_agent = request.headers.get('User-Agent') || request.headers.get('user-agent') || '';
-
-  if (url.pathname === '/' && user_agent.startsWith('curl/')) {
-    return handleInstallScriptRequest(request);
-  }
-
   const hostname_handler = hostname_mapping.get(url.hostname);
   if (hostname_handler) {
     return hostname_handler(request);
@@ -63,6 +55,14 @@ export async function handleRequest(request: Request): Promise<Response> {
     if (url.pathname.startsWith(prefix)) {
       return prefix_handler(request);
     }
+  }
+
+  /// curl https://clickhouse.com/ will output an install script. Note: HTTP2 has headers in lowercase.
+  /// This is the most important part of our website, because it allows users to install ClickHouse.
+  const user_agent = request.headers.get('User-Agent') || request.headers.get('user-agent') || '';
+
+  if (url.pathname === '/' && user_agent.startsWith('curl/')) {
+    return handleInstallScriptRequest(request);
   }
 
   /// This is our main websites. It covers everything that is not covered by special handlers above.
