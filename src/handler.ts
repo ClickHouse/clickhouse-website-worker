@@ -29,7 +29,6 @@ const prefix_mapping = [
   ['/codebrowser', handleCodebrowserRequest],
   ['/presentations/', handlePresentationsRequest],
   ['/debug', handleDebugRequest],
-  ['/data', handleGitHubRequest],
 ];
 
 export async function handleRequest(request: Request): Promise<Response> {
