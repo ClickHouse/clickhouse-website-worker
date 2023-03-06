@@ -1,7 +1,7 @@
 import { changeUrl } from './util';
 
 export async function trackInGalaxy(): Promise<Response> {
-  return fetch('https://qa.control-plane.clickhouse-dev.com/api/galaxy?sendGalaxyForensicEvent', {
+  return fetch('https://clickhouse.cloud/api/galaxy?sendGalaxyForensicEvent', {
     method: 'POST',
     body: JSON.stringify({
       rpcAction: 'sendGalaxyForensicEvent',
