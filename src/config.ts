@@ -5,7 +5,7 @@ export default {
     /// The content of this part of the website is hosted by GitHub Pages.
     /// We only proxy it on clickhouse.com.
     github: 'raw.githubusercontent.com',
-    github_docs_content: 'clickhouse-docs.vercel.app',
+    github_docs_content: 'docs-content.clickhouse.tech',
 
     /// The content of this part of our new website.
     website: 'production-marketing-website.vercel.app',
