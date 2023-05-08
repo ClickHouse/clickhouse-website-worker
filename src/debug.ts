@@ -1,4 +1,4 @@
-import { addDefaultHeaders, changeUrl } from './util';
+import { addDefaultHeaders } from './util';
 
 
 const html = `<!DOCTYPE html>
