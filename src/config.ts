@@ -10,7 +10,6 @@ export default {
     /// The content of this part of our new website.
     website: 'production-marketing-website.vercel.app',
     website_staging: 'marketing-website-git-main-clickhouse.vercel.app',
-    website_staging2: 'marketing-website-git-va-new-design-clickhouse.vercel.app/',
   },
 
   redirects: {
