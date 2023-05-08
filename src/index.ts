@@ -11,6 +11,11 @@ async function handleEvent(event: FetchEvent) {
   try {
     return await handleRequest(event.request);
   } catch (e) {
+    if (e instanceof TypeError) {
+      if ( e.message === "Request with a GET or HEAD method cannot have a body." ) {
+        return fallbackResponse(event.request);
+      }
+    }
     event.waitUntil(sendExceptionToSentry(e, event.request));
     return fallbackResponse(event.request);
   }
