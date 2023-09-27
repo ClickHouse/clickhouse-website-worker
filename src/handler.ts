@@ -17,7 +17,7 @@ const hostname_mapping = new Map([
   ['repo.clickhouse.tech', handleRepoRequest],
   ['packages.clickhouse.com', handlePackagesRequest],
   ['staging.clickhouse.com', handleWebsiteRequest],
-  ['staging2.clickhouse.com', handleWebsiteRequest],
+  ['cookie.clickhouse.com', handleWebsiteRequest],
 ]);
 
 /// Prefixes for paths on the main domain "clickhouse.com".
@@ -41,7 +41,11 @@ export async function handleRequest(request: Request): Promise<Response> {
   }
 
   /// Redirect from the old benchmark page to ClickBench.
-  if (url.pathname == '/benchmark' || url.pathname == '/benchmark/' || url.pathname.startsWith('/benchmark/dbms')) {
+  if (
+    url.pathname == '/benchmark' ||
+    url.pathname == '/benchmark/' ||
+    url.pathname.startsWith('/benchmark/dbms')
+  ) {
     return Response.redirect('https://benchmark.clickhouse.com/', 301);
   }
   if (url.pathname.startsWith('/benchmark/hardware')) {
@@ -59,12 +63,15 @@ export async function handleRequest(request: Request): Promise<Response> {
 
   /// curl https://clickhouse.com/ will output an install script. Note: HTTP2 has headers in lowercase.
   /// This is the most important part of our website, because it allows users to install ClickHouse.
-  const user_agent = request.headers.get('User-Agent') || request.headers.get('user-agent') || '';
+  const user_agent =
+    request.headers.get('User-Agent') ||
+    request.headers.get('user-agent') ||
+    '';
 
   if (url.pathname === '/' && user_agent.startsWith('curl/')) {
     return handleInstallScriptRequest(request);
   }
 
   /// This is our main websites. It covers everything that is not covered by special handlers above.
-  return handleWebsiteRequest(request, config.production)
+  return handleWebsiteRequest(request, config.production);
 }
