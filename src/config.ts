@@ -10,12 +10,15 @@ export default {
     /// The content of this part of our new website.
     website: 'production-marketing-website.vercel.app',
     website_staging: 'marketing-website-git-main-clickhouse.vercel.app',
+    website_cookie:
+      'marketing-website-git-securiti-ai-prod-sept-2-clickhouse.vercel.app',
   },
 
   redirects: {
     github: 'clickhouse.com',
     website: 'clickhouse.com',
     website_staging: 'staging.clickhouse.com',
+    website_cookie: 'cookie.clickhouse.com',
   },
 
   codebrowser: 'clickhouse-test-reports.s3.amazonaws.com',

@@ -10,11 +10,11 @@ export async function handleWebsiteRequest(
 
   if (!production) {
     delete_headers = [];
-    url.hostname = url.hostname.startsWith('staging2')
-      ? config.origins.website_staging2
+    url.hostname = url.hostname.startsWith('cookie')
+      ? config.origins.website_cookie
       : config.origins.website_staging;
   } else {
-     url.hostname = config.origins.website; 
+    url.hostname = config.origins.website;
   }
 
   const cf = {
