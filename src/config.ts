@@ -11,7 +11,7 @@ export default {
     website: 'production-marketing-website.vercel.app',
     website_staging: 'marketing-website-git-main-clickhouse.vercel.app',
     website_cookie:
-      'marketing-website-git-securiti-ai-prod-sept-2-clickhouse.vercel.app',
+      'marketing-website-git-securiti-cookie-consent-sep26-clickhouse.vercel.app',
   },
 
   redirects: {
