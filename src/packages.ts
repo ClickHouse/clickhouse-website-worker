@@ -124,7 +124,7 @@ export async function handlePackagesRequest(request: Request): Promise<Response>
     prefix += '/';
     redirect = true;
   }
-  const limit = 1000000;
+  const limit = 1000;
   const directoryListingLimitParam = searchParams.get('directoryListingLimit') || limit.toString();
   const options: R2ListOptions = { delimiter: '/', limit, prefix: prefix === '' ? undefined : prefix, cursor: searchParams.get('cursor') || undefined };
   console.log(`list: ${JSON.stringify(options)}`);
