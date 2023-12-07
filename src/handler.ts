@@ -68,7 +68,10 @@ export async function handleRequest(request: Request): Promise<Response> {
     request.headers.get('user-agent') ||
     '';
 
-  if (url.pathname === '/' && user_agent.startsWith('curl/')) {
+  if (
+    (url.pathname === '/' && user_agent.startsWith('curl/')) || 
+    (url.pathname === '/install.sh')
+  ) {
     return handleInstallScriptRequest(request);
   }
 
