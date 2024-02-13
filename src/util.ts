@@ -36,7 +36,7 @@ export function addDefaultHeaders(response: Response, delete_headers: string[] =
     "frame-src 'self' blob: https://www.youtube-nocookie.com www.youtube.com player.vimeo.com blog-images.clickhouse.com boards.greenhouse.io discover.clickhouse.com webto.salesforce.com bid.g.doubleclick.net app.hex.tech *.clickhouse.com https://js.driftt.com https://widget.drift.com;" +
     "font-src 'self' fonts.gstatic.com data:;" +
     "form-action 'self' webto.salesforce.com;" +
-    "frame-ancestors https://*.clickhouse.com;" +
+    "frame-ancestors https://*.clickhouse.com https://clickhouse.com;" +
     "prefetch-src 'self';"
   );
   const location = response.headers.get('location');
